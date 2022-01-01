@@ -20,5 +20,8 @@ Route::match(['get', 'post'], '/dashboard', function(){
 });
 Route::view('/pages/datatables', 'pages.datatables');
 
+Route::view('/login', 'login')->name('login');
+Route::view('/register', 'register')->name('register');
+
 //Demo:
 //https://demo.pixelcave.com/dashmix/be_layout_content_main_full_width.html

@@ -1,40 +1,5 @@
-<!doctype html>
-<html lang="{{ config('app.locale') }}">
+@include('layouts.header')
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-
-  <title>Dashmix - Bootstrap 5 Admin Template &amp; UI Framework</title>
-
-  <meta name="description" content="Dashmix - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
-  <meta name="author" content="pixelcave">
-  <meta name="robots" content="noindex, nofollow">
-
-  <!-- CSRF Token -->
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-
-  <!-- Icons -->
-  <link rel="shortcut icon" href="{{ asset('media/favicons/favicon.png') }}">
-  <link rel="icon" sizes="192x192" type="image/png" href="{{ asset('media/favicons/favicon-192x192.png') }}">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('media/favicons/apple-touch-icon-180x180.png') }}">
-
-  <!-- Fonts and Styles -->
-  @yield('css_before')
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-  <link rel="stylesheet" id="css-main" href="{{ mix('css/dashmix.css') }}">
-
-  <!-- You can include a specific file from public/css/themes/ folder to alter the default color theme of the template. eg: -->
-  <!-- <link rel="stylesheet" id="css-theme" href="{{ mix('css/themes/xwork.css') }}"> -->
-  @yield('css_after')
-
-  <!-- Scripts -->
-  <script>
-    window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
-  </script>
-</head>
-
-<body>
   <!-- Page Container -->
   <!--
     Available classes for #page-container:
@@ -267,101 +232,7 @@
                 Adding 'smini-visible' to an element will show it (display: inline-block) only when the sidebar is in mini mode
                 Adding 'smini-visible-block' to an element will show it (display: block) only when the sidebar is in mini mode
             -->
-    <nav id="sidebar" aria-label="Main Navigation">
-      <!-- Side Header -->
-      <div class="bg-header-dark">
-        <div class="content-header bg-white-5">
-          <!-- Logo -->
-          <a class="fw-semibold text-white tracking-wide" href="/">
-            <span class="smini-visible">
-              D<span class="opacity-75">x</span>
-            </span>
-            <span class="smini-hidden">
-              Loan<span class="opacity-75">Flood</span>
-            </span>
-          </a>
-          <!-- END Logo -->
-
-          <!-- Options -->
-          <div>
-            <!-- Toggle Sidebar Style -->
-            <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-            <!-- Class Toggle, functionality initialized in Helpers.dmToggleClass() -->
-            <button type="button" class="btn btn-sm btn-alt-secondary" data-toggle="class-toggle" data-target="#sidebar-style-toggler" data-class="fa-toggle-off fa-toggle-on" onclick="Dashmix.layout('sidebar_style_toggle');Dashmix.layout('header_style_toggle');">
-              <i class="fa fa-toggle-off" id="sidebar-style-toggler"></i>
-            </button>
-            <!-- END Toggle Sidebar Style -->
-
-            <!-- Dark Mode -->
-            <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-            <button type="button" class="btn btn-sm btn-alt-secondary" data-toggle="class-toggle" data-target="#dark-mode-toggler" data-class="far fa" onclick="Dashmix.layout('dark_mode_toggle');">
-              <i class="far fa-moon" id="dark-mode-toggler"></i>
-            </button>
-            <!-- END Dark Mode -->
-
-            <!-- Close Sidebar, Visible only on mobile screens -->
-            <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-            <button type="button" class="btn btn-sm btn-alt-secondary d-lg-none" data-toggle="layout" data-action="sidebar_close">
-              <i class="fa fa-times-circle"></i>
-            </button>
-            <!-- END Close Sidebar -->
-          </div>
-          <!-- END Options -->
-        </div>
-      </div>
-      <!-- END Side Header -->
-
-      <!-- Sidebar Scrolling -->
-      <div class="js-sidebar-scroll">
-        <!-- Side Navigation -->
-        <div class="content-side content-side-full">
-          <ul class="nav-main">
-            <li class="nav-main-item">
-              <a class="nav-main-link{{ request()->is('dashboard') ? ' active' : '' }}" href="/dashboard">
-                <i class="nav-main-link-icon fa fa-location-arrow"></i>
-                <span class="nav-main-link-name">Dashboard</span>
-                <span class="nav-main-link-badge badge rounded-pill bg-primary">5</span>
-              </a>
-            </li>
-            <li class="nav-main-heading">Various</li>
-            <li class="nav-main-item{{ request()->is('pages/*') ? ' open' : '' }}">
-              <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="true" href="#">
-                <i class="nav-main-link-icon fa fa-lightbulb"></i>
-                <span class="nav-main-link-name">Examples</span>
-              </a>
-              <ul class="nav-main-submenu">
-                <li class="nav-main-item">
-                  <a class="nav-main-link{{ request()->is('pages/datatables') ? ' active' : '' }}" href="/pages/datatables">
-                    <span class="nav-main-link-name">DataTables</span>
-                  </a>
-                </li>
-                <li class="nav-main-item">
-                  <a class="nav-main-link{{ request()->is('pages/slick') ? ' active' : '' }}" href="/pages/slick">
-                    <span class="nav-main-link-name">Slick Slider</span>
-                  </a>
-                </li>
-                <li class="nav-main-item">
-                  <a class="nav-main-link{{ request()->is('pages/blank') ? ' active' : '' }}" href="/pages/blank">
-                    <span class="nav-main-link-name">Blank</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-main-heading">More</li>
-            <li class="nav-main-item">
-              <a class="nav-main-link" href="/">
-                <i class="nav-main-link-icon fa fa-globe"></i>
-                <span class="nav-main-link-name">Landing</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <!-- END Side Navigation -->
-      </div>
-      <!-- END Sidebar Scrolling -->
-    </nav>
-    <!-- END Sidebar -->
-
+    @include('layouts.sidebar')
     <!-- Header -->
     <header id="page-header">
       <!-- Header Content -->
@@ -524,7 +395,7 @@
               <button type="button" class="btn btn-alt-primary" data-toggle="layout" data-action="header_search_off">
                 <i class="fa fa-fw fa-times-circle"></i>
               </button>
-              <input type="text" class="form-control border-0" placeholder="Search or hit ESC.." id="page-header-search-input" name="page-header-search-input">
+              <input type="text" class="form-control border-0" placeholder="Поиск заявок..." id="page-header-search-input" name="page-header-search-input">
             </div>
           </form>
         </div>
@@ -553,30 +424,4 @@
     <!-- END Main Container -->
 
     <!-- Footer -->
-    <footer id="page-footer" class="bg-body-light">
-      <div class="content py-0">
-        <div class="row fs-sm">
-          <div class="col-sm-6 order-sm-2 mb-1 mb-sm-0 text-center text-sm-end">
-            Crafted with <i class="fa fa-heart text-danger"></i> by <a class="fw-semibold" href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
-          </div>
-          <div class="col-sm-6 order-sm-1 text-center text-sm-start">
-            <a class="fw-semibold" href="https://1.envato.market/r6y" target="_blank">Dashmix</a> &copy;
-            <span data-toggle="year-copy"></span>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <!-- END Footer -->
-  </div>
-  <!-- END Page Container -->
-
-  <!-- Dashmix Core JS -->
-  <script src="{{ mix('js/dashmix.app.js') }}"></script>
-
-  <!-- Laravel Original JS -->
-  <!-- <script src="{{ mix('/js/laravel.app.js') }}"></script> -->
-
-  @yield('js_after')
-</body>
-
-</html>
+@include('layouts.footer')
