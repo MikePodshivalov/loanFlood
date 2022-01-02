@@ -24,7 +24,7 @@ Route::match(['get', 'post'], '/home', function(){
     return view('dashboard');
 })->middleware('auth')->name('home');
 
-Route::resource('/loans', LoanController::class)
+Route::resource('/', LoanController::class)
     ->missing(function (Request $request) {
         return Redirect::route('loans.index');
     });
