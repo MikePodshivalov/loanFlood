@@ -3,7 +3,7 @@
     <div class="bg-header-dark">
         <div class="content-header bg-white-5">
             <!-- Logo -->
-            <a class="fw-semibold text-white tracking-wide" href="/">
+            <a class="fw-semibold text-white tracking-wide" href="{{route('home')}}">
             <span class="smini-visible">
               D<span class="opacity-75">x</span>
             </span>

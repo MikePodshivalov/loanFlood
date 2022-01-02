@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\LoanController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,15 +16,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Example Routes
-Route::view('/', 'landing');
-Route::match(['get', 'post'], '/dashboard', function(){
+Route::get('/', function(){
     return view('dashboard');
-});
-Route::view('/pages/datatables', 'pages.datatables');
+})->middleware('auth');
 
-Route::view('/login', 'login')->name('login');
-Route::view('/register', 'register')->name('register');
+Route::match(['get', 'post'], '/home', function(){
+    return view('dashboard');
+})->middleware('auth')->name('home');
+
+Route::resource('/loans', LoanController::class)
+    ->missing(function (Request $request) {
+        return Redirect::route('loans.index');
+    });
+
+
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+//Route::view('/pages/datatables', 'pages.datatables');
+//Route::view('/login', 'login')->name('login');
+//Route::view('/register', 'register')->name('register');
 
 //Demo:
 //https://demo.pixelcave.com/dashmix/be_layout_content_main_full_width.html

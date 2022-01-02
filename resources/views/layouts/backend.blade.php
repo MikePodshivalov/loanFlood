@@ -1,5 +1,4 @@
 @include('layouts.header')
-
   <!-- Page Container -->
   <!--
     Available classes for #page-container:
@@ -261,7 +260,7 @@
           <div class="dropdown d-inline-block">
             <button type="button" class="btn btn-alt-secondary" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-fw fa-user d-sm-none"></i>
-              <span class="d-none d-sm-inline-block">Admin</span>
+              <span class="d-none d-sm-inline-block">{{Auth::user()->name}}</span>
               <i class="fa fa-fw fa-angle-down opacity-50 ms-1 d-none d-sm-inline-block"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="page-header-user-dropdown">
@@ -289,9 +288,12 @@
                 <!-- END Side Overlay -->
 
                 <div role="separator" class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0)">
-                  <i class="far fa-fw fa-arrow-alt-circle-left me-1"></i> Sign Out
-                </a>
+                  <form action="{{route('logout')}}" method="post" id="form-logout">
+                      @csrf
+                      <a class="dropdown-item" href="#" onclick="document.getElementById('form-logout').submit();">
+                          <i class="far fa-fw fa-arrow-alt-circle-left me-1"></i> Logout
+                      </a>
+                  </form>
               </div>
             </div>
           </div>
