@@ -1,6 +1,7 @@
 {
     "/js/laravel.app.js": "/js/laravel.app.js",
     "/js/dashmix.app.js": "/js/dashmix.app.js",
+    "/js/jquery.dataTables.min.js": "/js/jquery.dataTables.min.js",
     "/js/pages/tables_datatables.js": "/js/pages/tables_datatables.js",
     "/css/themes/xsmooth.css": "/css/themes/xsmooth.css",
     "/css/themes/xmodern.css": "/css/themes/xmodern.css",

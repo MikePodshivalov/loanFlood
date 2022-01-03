@@ -62,17 +62,9 @@
       <div class="bg-image" style="background-image: url('{{ asset('media/various/bg_side_overlay_header.jpg') }}');">
         <div class="bg-primary-op">
           <div class="content-header">
-            <!-- User Avatar -->
-            <a class="img-link me-1" href="javascript:void(0)">
-              <img class="img-avatar img-avatar48" src="{{ asset('media/avatars/avatar10.jpg') }}" alt="">
-            </a>
-            <!-- END User Avatar -->
 
             <!-- User Info -->
-            <div class="ms-2">
-              <a class="text-white fw-semibold" href="javascript:void(0)">George Taylor</a>
-              <div class="text-white-75 fs-sm">Full Stack Developer</div>
-            </div>
+
             <!-- END User Info -->
 
             <!-- Close Side Overlay -->
@@ -233,7 +225,7 @@
             -->
     @include('layouts.sidebar')
     <!-- Header -->
-    <header id="page-header">
+    <header id="page-header" class="bg-header-dark">
       <!-- Header Content -->
       <div class="content-header">
         <!-- Left Section -->
@@ -247,9 +239,9 @@
 
           <!-- Open Search Section -->
           <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-          <button type="button" class="btn btn-alt-secondary" data-toggle="layout" data-action="header_search_on">
-            <i class="fa fa-fw opacity-50 fa-search"></i> <span class="ms-1 d-none d-sm-inline-block">Search</span>
-          </button>
+{{--          <button type="button" class="btn btn-alt-secondary" data-toggle="layout" data-action="header_search_on">--}}
+{{--            <i class="fa fa-fw opacity-50 fa-search"></i> <span class="ms-1 d-none d-sm-inline-block">Search</span>--}}
+{{--          </button>--}}
           <!-- END Open Search Section -->
         </div>
         <!-- END Left Section -->
@@ -427,3 +419,5 @@
 
     <!-- Footer -->
 @include('layouts.footer')
+@stack('scripts')
+

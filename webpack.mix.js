@@ -26,6 +26,8 @@ mix
     /* JS */
     .js('resources/js/app.js', 'public/js/laravel.app.js')
     .js('resources/js/dashmix/app.js', 'public/js/dashmix.app.js')
+    .js('resources/js/jquery.dataTables.min.js', 'public/js/jquery.dataTables.min.js')
+
 
     /* Page JS */
     .js('resources/js/pages/tables_datatables.js', 'public/js/pages/tables_datatables.js')
@@ -34,7 +36,7 @@ mix
     .browserSync('localhost:8000')
     .disableNotifications()
 
-    /* Options */
+    // /* Options */
     .options({
         processCssUrls: false
     });

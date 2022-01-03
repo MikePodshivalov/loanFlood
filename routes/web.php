@@ -16,24 +16,23 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 |
 */
 
-Route::get('/', function(){
-    return view('dashboard');
-})->middleware('auth');
 
-Route::match(['get', 'post'], '/home', function(){
-    return view('dashboard');
+
+Route::match(['get', 'post'], '/', function(){
+    return view('home');
 })->middleware('auth')->name('home');
 
-Route::resource('/', LoanController::class)
+Route::resource('loans', LoanController::class)
     ->missing(function (Request $request) {
         return Redirect::route('loans.index');
     });
+//    ->middleware('auth');
 
 
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-//Route::view('/pages/datatables', 'pages.datatables');
+
 //Route::view('/login', 'login')->name('login');
 //Route::view('/register', 'register')->name('register');
 

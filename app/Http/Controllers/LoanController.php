@@ -15,8 +15,9 @@ class LoanController extends Controller
      */
     public function index()
     {
-        $loans = Loan::latest()->paginate(15);
-        return view('dashboard', compact('loans'));
+        $loans = Loan::get();
+
+        return view('loans.index', compact('loans'));
     }
 
     /**
@@ -26,7 +27,7 @@ class LoanController extends Controller
      */
     public function create()
     {
-        //
+        return view('loans.create');
     }
 
     /**
@@ -37,7 +38,10 @@ class LoanController extends Controller
      */
     public function store(StoreLoanRequest $request)
     {
-        //
+        dd($request);
+        $validated = $request->validated();
+
+        return redirect()->route('loans');
     }
 
     /**
@@ -48,7 +52,7 @@ class LoanController extends Controller
      */
     public function show(Loan $loan)
     {
-        //
+        return view('loans.show', compact('loan'));
     }
 
     /**
