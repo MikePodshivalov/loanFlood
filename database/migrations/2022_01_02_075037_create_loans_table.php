@@ -18,9 +18,16 @@ class CreateLoansTable extends Migration
             $table->string('name');
             $table->string('group')->nullable();
             $table->string('inn',12);
-            $table->enum('type', ['ВКЛ', 'НКЛ', 'БГ', 'ЛБГ', 'Разное']);
+            $table->string('type', 50);
             $table->unsignedInteger('amount')->nullable();
-            $table->boolean('pledge')->default(false);
+            $table->boolean('zs')->nullable();
+            $table->string('pathZS')->nullable();
+            $table->boolean('pd')->nullable();
+            $table->string('pathPD')->nullable();
+            $table->boolean('iab')->nullable();
+            $table->string('pathIAB')->nullable();
+            $table->boolean('ukk')->nullable();
+            $table->string('pathUKK')->nullable();
             $table->string('creator');
             $table->text('description')->nullable();
             $table->softDeletes();

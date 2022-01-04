@@ -16,6 +16,6 @@ class LoanSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Loan::factory(50)->create();
+        \App\Models\Loan::factory(100)->create();
     }
 }

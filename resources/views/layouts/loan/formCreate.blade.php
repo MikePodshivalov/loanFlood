@@ -26,15 +26,12 @@
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
-
             <div class="mb-3">
                 <label class="form-label" for="option-type">Тип кредитного продукта<span class="text-danger">*</span></label>
                 <select class="form-select @error('type') is-invalid @enderror" id="option-type" name="type" required>
-                    <option value="ВКЛ" {{old('type') == 'ВКЛ' ? "selected" : ""}}>ВКЛ</option>
-                    <option value="НКЛ" {{old('type') == 'НКЛ' ? "selected" : ""}}>НКЛ</option>
-                    <option value="БГ" {{old('type') == 'БГ' ? "selected" : ""}}>БГ</option>
-                    <option value="ЛБГ" {{old('type') == 'ЛБГ' ? "selected" : ""}}>ЛБГ</option>
-                    <option value="Разное" {{old('type') == 'Разное' ? "selected" : ""}}>Разное</option>
+                    @foreach(config('loanproduct') as $type)
+                        <option value="{{$type}}" {{old('type') == $type ? "selected" : ""}}>{{$type}}</option>
+                    @endforeach
                 </select>
                 @error('type')
                 <div class="alert alert-danger">{{ $message }}</div>
@@ -43,26 +40,41 @@
 
             <div class="mb-3">
                 <label class="form-label @error('amount') is-invalid @enderror" for="text-amount">Сумма, млн.руб.</label>
-                <input type="text" class="form-control" id="text-amount" name="amount" placeholder="Введите сумму">
+                <input type="text" class="form-control" id="text-amount" value="{{old('amount')}}" name="amount" placeholder="Введите сумму">
                 @error('amount')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3 form-check">
-                <input id="checkbox-pledge" class="checkbox form-check-input" type="checkbox" name="pledge"/>
-                <label class="form-check-label" for="checkbox-pledge">Необходимо заключение Залоговой службы</label>
+                <input id="checkbox-ukk" class="checkbox form-check-input" type="checkbox" name="ukk"/>
+                <label for="checkbox-ukk">УКК</label>
+                <div class="mb-4" id="path-ukk" style="display: none">
+                    <input type="text" class="form-control" id="text-path-ukk" name="pathUKK" placeholder="Введите путь к файлам для УКК">
+                </div>
+            </div>
+            <div class="mb-3 form-check">
+                <input id="checkbox-zs" class="checkbox form-check-input" type="checkbox" name="zs"/>
+                <label class="form-check-label" for="checkbox-zs">ЗС</label>
                 <div class="mb-4" id="path-zs" style="display: none">
-                    <input type="text" class="form-control" id="text-path-zs" name="path-zs" placeholder="Введите путь к файлам для залоговой службы">
+                    <input type="text" class="form-control" id="text-path-zs" name="pathZS" placeholder="Введите путь к файлам для ЗС">
                 </div>
             </div>
             <div class="mb-3 form-check">
                 <input id="checkbox-pd" class="checkbox form-check-input" type="checkbox" name="pd"/>
-                <label for="checkbox-pd">Необходимо заключение Правового департамента на сделку</label>
+                <label for="checkbox-pd">ПД</label>
                 <div class="mb-4" id="path-pd" style="display: none">
-                    <input type="text" class="form-control" id="text-path-pd" name="path-pd" placeholder="Введите путь к файлам для правового департамента">
+                    <input type="text" class="form-control" id="text-path-pd" name="pathPD" placeholder="Введите путь к файлам для ПД">
                 </div>
             </div>
+            <div class="mb-3 form-check">
+                <input id="checkbox-iab" class="checkbox form-check-input" type="checkbox" name="iab"/>
+                <label for="checkbox-iab">ИАБ</label>
+                <div class="mb-4" id="path-iab" style="display: none">
+                    <input type="text" class="form-control" id="text-path-iab" name="pathIAB" placeholder="Введите путь к файлам для ИАБ">
+                </div>
+            </div>
+
 
             <div class="mb-3" style="display: none">
                 <input type="text" name="creator" value="{{Auth::user()->name}}" required>
@@ -91,21 +103,19 @@
 </form>
 @push('scripts')
     <script>
-        $('#checkbox-pledge').click(function(){
-            if ($(this).is(':checked')){
-                $('#path-zs').show(100);
-            } else {
-                $('#path-zs').hide(100);
-                $('#text-path-zs').val('');
-            }
-        });
-        $('#checkbox-pd').click(function(){
-            if ($(this).is(':checked')){
-                $('#path-pd').show(100);
-            } else {
-                $('#path-pd').hide(100);
-                $('#text-path-pd').val('');
-            }
-        });
+        function showDivWithPath(name) {
+            $('#checkbox-' + name).click(function(){
+                if ($(this).is(':checked')){
+                    $('#path-' + name).show(100);
+                } else {
+                    $('#path-' + name).hide(100);
+                    $('#text-path-' + name).val('');
+                }
+            });
+        }
+        showDivWithPath('zs');
+        showDivWithPath('pd');
+        showDivWithPath('ukk');
+        showDivWithPath('iab');
     </script>
 @endpush

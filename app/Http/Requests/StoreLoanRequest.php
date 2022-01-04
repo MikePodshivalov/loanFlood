@@ -28,19 +28,26 @@ class StoreLoanRequest extends FormRequest
             'name' => ['required', 'min:4', 'max:255'],
             'group' => ['max:255'],
             'inn' => ['required', 'min:10', 'max:12'],
-            'type' => Rule::in(['ВКЛ', 'НКЛ', 'БГ', 'ЛБГ', 'Разное']),
+            'type' => Rule::in(config('loanproduct')),
             'amount' => ['nullable', 'max:5000', 'numeric'],
             'creator' => ['required', 'max:255'],
-            'path-zs' => ['nullable', 'max:255'],
-            'path-pd' => ['nullable', 'max:255'],
-            'tags' => ['nullable', 'max:255'],
+            'pathZS' => ['nullable', 'max:255'],
+            'pathUKK' => ['nullable', 'max:255'],
+            'pathIAB' => ['nullable', 'max:255'],
+            'pathPD' => ['nullable', 'max:255'],
+            'zs' => ['nullable', 'max:1'],
+            'ukk' => ['nullable', 'max:1'],
+            'iab' => ['nullable', 'max:1'],
+            'pd' => ['nullable', 'max:1'],
             'description' => ['nullable'],
         ];
     }
 
     public function prepareForValidation()
     {
-        $this->booleanFieldValidation('pledge');
+        $this->booleanFieldValidation('zs');
+        $this->booleanFieldValidation('iab');
+        $this->booleanFieldValidation('ukk');
         $this->booleanFieldValidation('pd');
     }
 
@@ -50,5 +57,13 @@ class StoreLoanRequest extends FormRequest
         } else {
             $this->request->set($field, 1);
         }
+    }
+
+    public function getTagsFromRequest()
+    {
+        $tags = collect(explode(',', $this['tags']))->keyBy(function ($item) {
+            return $item;
+        });
+        return $tags;
     }
 }

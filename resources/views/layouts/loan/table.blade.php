@@ -20,13 +20,14 @@
     top: 2em; /* Положение подсказки */
     }
 </style>
+{{--{{dd($loans[2]->tags[0]->name)}}--}}
 <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
     <div class="row">
         <div id="example_wrapper" class="col-xl-12 dataTables_wrapper">
             <table class="myTable display nowrap dataTable dtr-inline collapsed">
                 <thead>
                 <tr>
-                    <th class="text-center" style="width: 100px;">
+                    <th class="text-center" style="width: 80px;">
                         Id
                     </th>
                     <th class="text-center" style="width: 25%;">
@@ -38,11 +39,14 @@
                     <th class="text-center" style="width: 8%;">
                         Тип
                     </th>
-                    <th class="text-center" style="width: 15%;">
-                        Сумма, млн. руб.
+                    <th class="text-center" style="width: 10%;">
+                        Млн. руб.
                     </th>
-                    <th style="width: 12%;" class="text-center">
+                    <th style="width: 10%;" class="text-center">
                         Дата создания
+                    </th>
+                    <th style="width: 10%;" class="text-center">
+                        Дата удаления
                     </th>
                     <th style="width: 15%;" class="text-center">
                         Действия
@@ -66,21 +70,29 @@
                                 {{$loan->type}}
                             </td>
                             <td class="text-center">
-                                {{$loan->amount / 1000}}
+                                {{$loan->amount}}
                             </td>
                             <td class="text-center">
                                 {{date('d-m-Y', strtotime($loan->created_at))}}
                             </td>
                             <td class="text-center">
-                                <a data-tooltip="Подробнее" style="font-size: xx-small;" href="{{ route('loans.show', $loan) }}">
-                                    <i class="far fa-2x fa-eye"></i>
-                                </a>
-                                <a data-tooltip="Редактирование" style="font-size: xx-small;" href="{{ route('loans.edit', $loan) }}">
-                                    <i class="far fa-2x fa-edit"></i>
-                                </a>
-                                <a data-tooltip="Удаление" style="font-size: xx-small;" href="{{ route('loans.destroy', $loan) }}">
-                                    <i class="far fa-2x fa-window-close"></i>
-                                </a>
+                                {{$loan->deleted_at ? date('d-m-Y', strtotime($loan->deleted_at)) : null}}
+                            </td>
+                            <td class="text-center">
+                                <form action="{{route('loans.destroy', $loan)}}" method="post" id="form-id">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a data-tooltip="Подробнее" style="font-size: xx-small;" href="{{ route('loans.show', $loan) }}">
+                                        <i class="far fa-2x fa-eye"></i>
+                                    </a>
+                                    <a data-tooltip="Редактирование" style="font-size: xx-small;" href="{{ route('loans.edit', $loan) }}">
+                                        <i class="far fa-2x fa-edit"></i>
+                                    </a>
+                                        <a style="font-size: xx-small;" href="#" onclick="document.getElementById('form-id').submit();">
+                                            <i class="far fa-2x fa-window-close"></i>
+                                        </a>
+                                </form>
+
                             </td>
                         </tr>
                     @endforeach

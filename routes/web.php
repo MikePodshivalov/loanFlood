@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
@@ -22,17 +23,16 @@ Route::match(['get', 'post'], '/', function(){
     return view('home');
 })->middleware('auth')->name('home');
 
-Route::resource('loans', LoanController::class)
-    ->missing(function (Request $request) {
-        return Redirect::route('loans.index');
-    });
-//    ->middleware('auth');
+Route::resource('loans', LoanController::class)->middleware('auth');
 
 
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
+Route::get('/deleted', [LoanController::class, 'deleted'])->name('deleted')->middleware('auth');
+
+Route::get('/loans/tags/{tag}', [TagsController::class, 'index'])->name('loans.tag')->middleware('auth');
 //Route::view('/login', 'login')->name('login');
 //Route::view('/register', 'register')->name('register');
 

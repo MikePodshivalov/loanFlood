@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\Synchronizable;
 use App\Http\Requests\StoreLoanRequest;
 use App\Http\Requests\UpdateLoanRequest;
 use App\Models\Loan;
@@ -15,7 +16,7 @@ class LoanController extends Controller
      */
     public function index()
     {
-        $loans = Loan::get();
+        $loans = Loan::latest()->whereNull('deleted_at')->with('tags')->get(['id', 'name', 'inn', 'type', 'amount', 'created_at', 'deleted_at']);
 
         return view('loans.index', compact('loans'));
     }
@@ -36,12 +37,15 @@ class LoanController extends Controller
      * @param  \App\Http\Requests\StoreLoanRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreLoanRequest $request)
+    public function store(StoreLoanRequest $request, Synchronizable $tagsSynchronizer)
     {
-        dd($request);
         $validated = $request->validated();
-
-        return redirect()->route('loans');
+        $loan = Loan::create($validated);
+        if (!is_null($request['tags'])) {
+            $tags = $request->getTagsFromRequest();
+            $tagsSynchronizer->sync($tags, $loan);
+        }
+        return redirect()->route('loans.index');
     }
 
     /**
@@ -63,7 +67,7 @@ class LoanController extends Controller
      */
     public function edit(Loan $loan)
     {
-        //
+        return view('loans.edit', compact('loan'));
     }
 
     /**
@@ -73,9 +77,13 @@ class LoanController extends Controller
      * @param  \App\Models\Loan  $loan
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateLoanRequest $request, Loan $loan)
+    public function update(UpdateLoanRequest $request, Loan $loan, Synchronizable $tagsSynchronizer)
     {
-        //
+        $validated = $request->validated();
+        $loan->update($validated);
+        $tags = $request->getTagsFromRequest();
+        $tagsSynchronizer->sync($tags, $loan);
+        return redirect()->route('loans.index');
     }
 
     /**
@@ -86,6 +94,13 @@ class LoanController extends Controller
      */
     public function destroy(Loan $loan)
     {
-        //
+        $loan->delete();
+        return redirect()->route('loans.index');
+    }
+
+    public function deleted()
+    {
+        $loans = Loan::latest()->onlyTrashed()->get(['id', 'name', 'inn', 'type', 'amount', 'created_at', 'deleted_at']);
+        return view('loans.showDeleted', compact('loans'));
     }
 }

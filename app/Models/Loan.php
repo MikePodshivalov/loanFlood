@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\Loan
@@ -37,8 +38,32 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Loan whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Loan whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $zs
+ * @property string|null $path-zs
+ * @property int|null $pd
+ * @property string|null $path-pd
+ * @property int|null $iab
+ * @property string|null $path-iab
+ * @property int|null $ukk
+ * @property string|null $path-ukk
+ * @method static \Illuminate\Database\Eloquent\Builder|Loan whereIab($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Loan wherePathIab($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Loan wherePathPd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Loan wherePathUkk($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Loan wherePathZs($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Loan wherePd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Loan whereUkk($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Loan whereZs($value)
  */
 class Loan extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+    protected $dates = ['deleted_at'];
+
+    protected $guarded = [];
+
+    public function tags()
+    {
+        return $this->belongsToMany(\App\Models\Tag::class);
+    }
 }

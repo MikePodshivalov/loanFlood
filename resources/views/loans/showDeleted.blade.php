@@ -1,13 +1,7 @@
+
 @extends('layouts.backend')
 @section('content')
     <div class="content content-full content-boxed">
-        <div class="content">
-            <div class="block-content block-content-full">
-                <button class="btn-hero btn-primary" onclick="window.location='{{route('loans.create')}}'">
-                    Создать новую заявку
-                </button>
-            </div>
-        </div>
         <div class="block block-rounded">
             <div class="block-content block-content-full">
                 @include('layouts.loan.table')
@@ -38,5 +32,3 @@
         </div>
     </div>
 @endsection
-
-
