@@ -23,6 +23,10 @@ Route::match(['get', 'post'], '/', function(){
     return view('home');
 })->middleware('auth')->name('home');
 
+Route::get('/deleted', [LoanController::class, 'deleted'])->name('deleted')->middleware('auth');
+Route::post('/deleted', [LoanController::class, 'restore'])->name('restore')->middleware('auth');
+Route::delete('/deleted', [LoanController::class, 'forceDelete'])->name('force')->middleware('auth');
+
 Route::resource('loans', LoanController::class)->middleware('auth');
 
 
@@ -30,7 +34,7 @@ Route::post('/register', [RegisteredUserController::class, 'store'])->name('regi
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-Route::get('/deleted', [LoanController::class, 'deleted'])->name('deleted')->middleware('auth');
+
 
 Route::get('/loans/tags/{tag}', [TagsController::class, 'index'])->name('loans.tag')->middleware('auth');
 //Route::view('/login', 'login')->name('login');

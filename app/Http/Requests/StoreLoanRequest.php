@@ -29,7 +29,7 @@ class StoreLoanRequest extends FormRequest
             'group' => ['max:255'],
             'inn' => ['required', 'min:10', 'max:12'],
             'type' => Rule::in(config('loanproduct')),
-            'amount' => ['nullable', 'max:5000', 'numeric'],
+            'amount' => ['nullable', 'max:10000', 'numeric'],
             'creator' => ['required', 'max:255'],
             'pathZS' => ['nullable', 'max:255'],
             'pathUKK' => ['nullable', 'max:255'],

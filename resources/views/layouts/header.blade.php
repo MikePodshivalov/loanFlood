@@ -14,12 +14,11 @@
     @yield('css_before')
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css"/>
+    <link rel="stylesheet" href="{{ asset("/css/myCSS.css") }}">
 
     <link rel="stylesheet" id="css-main" href="{{ mix('css/dashmix.css') }}">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="//cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
-
-
     <script type="text/javascript" src="{{ mix('js/jquery.dataTables.min.js') }}"></script>
 
 

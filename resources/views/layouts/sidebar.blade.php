@@ -50,13 +50,13 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link{{str_contains(Route::currentRouteName(), 'deleted') ? ' active' : '' }}" href="{{route('deleted')}}">
+                    <a class="nav-main-link{{Route::currentRouteName() === 'deleted' ? ' active' : '' }}" href="{{route('deleted')}}">
                         <span class="nav-main-link-name">Удаленные заявки</span>
                     </a>
                 </li>
             </ul>
-            <div class="p-3 mb-3">
-                <h4 class="font-italic">Облако тегов</h4>
+            <div class="mt-lg-8">
+                <span class="nav-main-link-name">Облако тегов</span>
                 @include('loans.tags', ['tags' => $tagsCloud])
             </div>
         </div>

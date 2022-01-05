@@ -22,6 +22,9 @@
                     <th style="width: 10%;" class="text-center">
                         Дата создания
                     </th>
+                    <th style="width: 10%;" class="text-center">
+                        Дата удаления
+                    </th>
                     <th style="width: 15%;" class="text-center">
                         Действия
                     </th>
@@ -50,20 +53,24 @@
                                 {{date('d-m-Y', strtotime($loan->created_at))}}
                             </td>
                             <td class="text-center">
-                                <form action="{{route('loans.destroy', $loan)}}" method="post" id="form-id-{{$loan->id}}">
+                                {{$loan->deleted_at ? date('d-m-Y', strtotime($loan->deleted_at)) : null}}
+                            </td>
+                            <td class="text-center">
+                                <form action="{{route('restore')}}" style="display: inline-block" method="post" id="form-id-restore-{{$loan->id}}">
+                                    @csrf
+                                    <a data-tooltip="Восстановление" style="font-size: xx-small;" href="#" onclick="document.getElementById('form-id-restore-{{$loan->id}}').submit();">
+                                        <input type="hidden" name="loan_id" value="{{$loan->id}}">
+                                        <i class="far fa-2x fa-arrow-alt-circle-up"></i>
+                                    </a>
+                                </form>
+                                <form action="{{route('force')}}" style="display: inline-block" method="post" id="form-id-delete-{{$loan->id}}">
                                     @csrf
                                     @method('DELETE')
-                                    <a data-tooltip="Подробнее" style="font-size: xx-small;" href="{{ route('loans.show', $loan) }}">
-                                        <i class="far fa-2x fa-eye"></i>
+                                    <a data-tooltip="Удаление навсегда" style="font-size: xx-small;" href="#" onclick="document.getElementById('form-id-delete-{{$loan->id}}').submit();">
+                                        <input type="hidden" name="loan_id" value="{{$loan->id}}">
+                                        <i class="far fa-2x fa-window-close"></i>
                                     </a>
-                                    <a data-tooltip="Редактирование" style="font-size: xx-small;" href="{{ route('loans.edit', $loan) }}">
-                                        <i class="far fa-2x fa-edit"></i>
-                                    </a>
-                                        <a data-tooltip="Удаление" style="font-size: xx-small;" href="#" onclick="document.getElementById('form-id-{{$loan->id}}').submit();">
-                                            <i class="far fa-2x fa-window-close"></i>
-                                        </a>
                                 </form>
-
                             </td>
                         </tr>
                     @endforeach

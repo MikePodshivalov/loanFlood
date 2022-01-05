@@ -4,7 +4,7 @@
 @if($tags->isNotEmpty())
     <div>
         @foreach($tags as $tag)
-            <a href="{{ route('loans.tag', $tag) }}" class="badge badge-dark small"> {{ $tag->name }} </a>
+            <a href="{{ route('loans.tag', $tag) }}" class="badge badge bg-info "> {{ $tag->name }} </a>
         @endforeach
     </div>
 @endif

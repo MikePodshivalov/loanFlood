@@ -4,7 +4,7 @@
     <div class="content content-full content-boxed">
         <div class="block block-rounded">
             <div class="block-content block-content-full">
-                @include('layouts.loan.table')
+                @include('layouts.loan.tableDeleted')
             </div>
         </div>
         <div class="row">

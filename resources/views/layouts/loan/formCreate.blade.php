@@ -101,21 +101,5 @@
         </div>
     </div>
 </form>
-@push('scripts')
-    <script>
-        function showDivWithPath(name) {
-            $('#checkbox-' + name).click(function(){
-                if ($(this).is(':checked')){
-                    $('#path-' + name).show(100);
-                } else {
-                    $('#path-' + name).hide(100);
-                    $('#text-path-' + name).val('');
-                }
-            });
-        }
-        showDivWithPath('zs');
-        showDivWithPath('pd');
-        showDivWithPath('ukk');
-        showDivWithPath('iab');
-    </script>
-@endpush
+
+<script type="text/javascript" src="{{ asset("/js/myJS.js") }}"></script>

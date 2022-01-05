@@ -6,6 +6,7 @@ use App\Contracts\Synchronizable;
 use App\Http\Requests\StoreLoanRequest;
 use App\Http\Requests\UpdateLoanRequest;
 use App\Models\Loan;
+use Illuminate\Http\Request;
 
 class LoanController extends Controller
 {
@@ -16,7 +17,8 @@ class LoanController extends Controller
      */
     public function index()
     {
-        $loans = Loan::latest()->whereNull('deleted_at')->with('tags')->get(['id', 'name', 'inn', 'type', 'amount', 'created_at', 'deleted_at']);
+        $loans = Loan::latest()->whereNull('deleted_at')->with('tags')
+            ->get(['id', 'name', 'inn', 'type', 'amount', 'created_at', 'deleted_at']);
 
         return view('loans.index', compact('loans'));
     }
@@ -101,6 +103,25 @@ class LoanController extends Controller
     public function deleted()
     {
         $loans = Loan::latest()->onlyTrashed()->get(['id', 'name', 'inn', 'type', 'amount', 'created_at', 'deleted_at']);
-        return view('loans.showDeleted', compact('loans'));
+        return view('loans.deleted', compact('loans'));
     }
+
+    public function restore(Request $request)
+    {
+        if(isset($request['loan_id']) && !empty($request['loan_id'])) {
+            $id = $request['loan_id'];
+            Loan::withTrashed()->find($id)->restore();
+        }
+        return redirect ('deleted');
+    }
+
+    public function forceDelete(Request $request)
+    {
+        if(isset($request['loan_id']) && !empty($request['loan_id'])) {
+            $id = $request['loan_id'];
+            Loan::onlyTrashed()->find($id)->forceDelete();
+        }
+        return redirect ('deleted');
+    }
+
 }
