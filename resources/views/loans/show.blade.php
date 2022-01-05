@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="{{ asset("css/my.css") }}">
-{{dd(auth()->user())}}
 @extends('layouts.backend')
 @section('content')
 <div class="content">

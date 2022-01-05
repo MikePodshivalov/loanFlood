@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Mail\LoanCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -61,6 +62,16 @@ class Loan extends Model
     protected $dates = ['deleted_at'];
 
     protected $guarded = [];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::created(function ($loan) {
+            \Mail::to('mapodshivalov@gmail.com')->send(
+                new LoanCreated($loan)
+            );
+        });
+    }
 
     public function tags()
     {
