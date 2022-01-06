@@ -7,7 +7,7 @@
         </div>
 
         @if (session('status') == 'verification-link-sent')
-            <div class="mb-4 font-medium text-sm text-green-600">
+            <div class="mb-4 alert-success font-medium">
                 Новая ссылка для подтверждения электронной почты успешно отправлена Вам на почту!
             </div>
         @endif
@@ -25,4 +25,7 @@
                 {{ __('Logout') }}
             </button>
         </form>
+
+        <a href="{{ url()->previous() }}" class="mb-4"> Назад </a>
+
     </div>

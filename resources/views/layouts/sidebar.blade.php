@@ -54,6 +54,26 @@
                         <span class="nav-main-link-name">Удаленные заявки</span>
                     </a>
                 </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link{{str_contains(Route::currentRouteName(), 'searchINN') ? ' active' : '' }}" href="{{route('searchINN')}}">
+                        <span class="nav-main-link-name">Реквизиты по ИНН</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="#">
+                        <span class="nav-main-link-name">Работа с выписками ЕГРН (в разработке)</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="#">
+                        <span class="nav-main-link-name">Работа с выписками по р/с (в разработке)</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="#">
+                        <span class="nav-main-link-name">Нумерация договоров (в разработке)</span>
+                    </a>
+                </li>
             </ul>
             <div class="mt-lg-8">
                 <span class="nav-main-link-name">Облако тегов</span>

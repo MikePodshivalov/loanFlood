@@ -23,6 +23,6 @@ class Tag extends Model
 
     public static function tagsCloud()
     {
-        return (new self)->has('loans')->get();
+        return (new self)->has('loans')->where('name', '<>', '')->get();
     }
 }

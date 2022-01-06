@@ -104,9 +104,6 @@
               <i class="fa fa-fw fa-angle-down opacity-50 ms-1 d-none d-sm-inline-block"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="page-header-user-dropdown">
-              <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">
-                Профиль
-              </div>
               <div class="p-2">
 {{--                  В случае добавления профиля и счетчика входящих сообщений - можно добавить код ниже--}}
 {{--                <a class="dropdown-item" href="javascript:void(0)">--}}
@@ -221,20 +218,6 @@
       <!-- END Header Content -->
 
       <!-- Header Search -->
-      <div id="page-header-search" class="overlay-header bg-header-dark">
-        <div class="content-header">
-          <form class="w-100" action="/dashboard" method="POST">
-            @csrf
-            <div class="input-group">
-              <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-              <button type="button" class="btn btn-alt-primary" data-toggle="layout" data-action="header_search_off">
-                <i class="fa fa-fw fa-times-circle"></i>
-              </button>
-              <input type="text" class="form-control border-0" placeholder="Поиск заявок..." id="page-header-search-input" name="page-header-search-input">
-            </div>
-          </form>
-        </div>
-      </div>
       <!-- END Header Search -->
 
       <!-- Header Loader -->

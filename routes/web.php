@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DadataController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,10 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 
 Route::get('/loans/tags/{tag}', [TagsController::class, 'index'])->name('loans.tag')->middleware('auth');
 Route::view('/email/verify', 'auth.verify-email')->name('verify')->middleware('auth');
+
+Route::get('/searchINN', [DadataController::class, 'index'])->name('searchINN')->middleware('auth');
+Route::post('/searchINN', [DadataController::class, 'index'])->name('searchINN.index')->middleware('auth');
+Route::get('/searchINN/found', [DadataController::class, 'show'])->name('searchINN.show')->middleware('auth');
 
 //Route::view('/login', 'login')->name('login');
 //Route::view('/register', 'register')->name('register');

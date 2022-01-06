@@ -9,16 +9,17 @@
             <table class="table longPath">
                 <thead>
                 <tr>
-                    <th class="text-center" scope="col">ID</th>
-                    <th class="text-center" scope="col">Группа</th>
+                    <th class="text-center" scope="col" style="width: 60px">ID</th>
+                    <th class="text-center" scope="col" style="width: 80px">Группа</th>
                     <th class="text-center" scope="col">ИНН</th>
-                    <th class="text-center" scope="col">Млн.руб.</th>
+                    <th class="text-center" scope="col" style="width: 100px">Млн.руб.</th>
                     <th class="text-center" scope="col">Кем создана</th>
-                    <th class="text-center" scope="col">Дата создания</th>
+                    <th class="text-center" scope="col" style="width: 150px">Дата создания</th>
                     <th class="text-center" scope="col">Закл. ЗС</th>
                     <th class="text-center" scope="col">Закл. ПД</th>
                     <th class="text-center" scope="col">Закл. ИАБ</th>
-                    <th class="text-center" scope="col">Закл. УКК</th>
+                    <th class="text-center" scope="col">КСОВ</th>
+                    <th class="text-center" scope="col">КК</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,7 +40,10 @@
                         Путь к заключению ИАБ
                     </td>
                     <td class="text-center longPathTd">
-                        Путь к заключению УКК
+                        Путь к КСОВ
+                    </td>
+                    <td class="text-center longPathTd">
+                        КК
                     </td>
                 </tr>
                 </tbody>

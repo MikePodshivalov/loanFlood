@@ -15,6 +15,10 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(\App\Contracts\Synchronizable::class, \App\Services\TagsSynchronizer::class);
+
+        $this->app->singleton('dadata', function ($app) {
+            return new \Dadata\DadataClient(env('DADATA_KEY'), null);
+        });
     }
 
     /**
