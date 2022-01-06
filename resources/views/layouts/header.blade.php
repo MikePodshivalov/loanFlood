@@ -21,9 +21,6 @@
     <script type="text/javascript" src="//cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.js"></script>
     <script type="text/javascript" src="{{ mix('js/jquery.dataTables.min.js') }}"></script>
 
-
-    <!-- You can include a specific file from public/css/themes/ folder to alter the default color theme of the template. eg: -->
-<!-- <link rel="stylesheet" id="css-theme" href="{{ mix('css/themes/xwork.css') }}"> -->
 @yield('css_after')
 
 <!-- Scripts -->
@@ -35,4 +32,5 @@
     </script>
 </head>
 <body>
+
 
