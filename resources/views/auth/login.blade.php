@@ -32,9 +32,14 @@
                         <button type="submit" class="btn w-100 btn-lg btn-hero btn-primary">
                             <i class="fa fa-fw fa-sign-in-alt opacity-50 me-1"></i> Войти
                         </button>
-                        <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" value="{{old('remember')}}" id="example-checkbox-default2" name="remember">
-                            <label class="form-check-label" for="example-checkbox-default2">Запомнить меня</label>
+                        <div class="mt-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                    <label class="form-check-label" for="remember">
+                                        Запомнить меня
+                                    </label>
+                                </div>
                         </div>
                         <p class="mt-3 mb-0 d-lg-flex justify-content-lg-between">
                             <a class="btn btn-sm btn-alt-secondary d-block d-lg-inline-block mb-1" href="{{route('password.request')}}">

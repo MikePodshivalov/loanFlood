@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Pagination\Paginator;
+use App\Contracts\Synchronizable;
+use App\Models\Tag;
+use App\Services\TagsSynchronizer;
+use Dadata\DadataClient;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,10 +17,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(\App\Contracts\Synchronizable::class, \App\Services\TagsSynchronizer::class);
+        $this->app->singleton(Synchronizable::class, TagsSynchronizer::class);
 
         $this->app->singleton('dadata', function ($app) {
-            return new \Dadata\DadataClient(env('DADATA_KEY'), null);
+            return new DadataClient(env('DADATA_KEY'), null);
         });
     }
 
@@ -29,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('layouts.sidebar', function ($view) {
-            $view->with('tagsCloud', \App\Models\Tag::tagsCloud());
+            $view->with('tagsCloud', Tag::tagsCloud());
         });
     }
 }

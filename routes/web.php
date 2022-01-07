@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DadataController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
@@ -43,6 +44,10 @@ Route::view('/email/verify', 'auth.verify-email')->name('verify')->middleware('a
 Route::get('/searchINN', [DadataController::class, 'index'])->name('searchINN')->middleware('auth');
 Route::post('/searchINN', [DadataController::class, 'index'])->name('searchINN.index')->middleware('auth');
 Route::get('/searchINN/found', [DadataController::class, 'show'])->name('searchINN.show')->middleware('auth');
+
+Route::get('/roles', [RolesController::class, 'index'])->name('roles.index')->middleware('auth');
+Route::post('/roles', [RolesController::class, 'store'])->name('roles.store')->middleware('auth');
+
 
 //Route::view('/login', 'login')->name('login');
 //Route::view('/register', 'register')->name('register');

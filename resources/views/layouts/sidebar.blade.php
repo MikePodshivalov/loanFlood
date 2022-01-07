@@ -60,6 +60,11 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
+                    <a class="nav-main-link{{str_contains(Route::currentRouteName(), 'roles') ? ' active' : '' }}" href="{{route('roles.index')}}">
+                        <span class="nav-main-link-name">Раздача ролей</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
                     <a class="nav-main-link" href="#">
                         <span class="nav-main-link-name">Работа с выписками ЕГРН (в разработке)</span>
                     </a>
