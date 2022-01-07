@@ -7,6 +7,7 @@ use App\Http\Requests\StoreLoanRequest;
 use App\Http\Requests\UpdateLoanRequest;
 use App\Models\Loan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class LoanController extends Controller
 {
@@ -26,7 +27,7 @@ class LoanController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return
      */
     public function create()
     {
@@ -37,7 +38,7 @@ class LoanController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreLoanRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return
      */
     public function store(StoreLoanRequest $request, Synchronizable $tagsSynchronizer)
     {
@@ -54,7 +55,7 @@ class LoanController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Loan  $loan
-     * @return \Illuminate\Http\Response
+     * @return
      */
     public function show(Loan $loan)
     {
@@ -65,7 +66,7 @@ class LoanController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Loan  $loan
-     * @return \Illuminate\Http\Response
+     * @return
      */
     public function edit(Loan $loan)
     {
