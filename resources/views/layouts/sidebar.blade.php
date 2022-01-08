@@ -61,7 +61,7 @@
                 </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{str_contains(Route::currentRouteName(), 'roles') ? ' active' : '' }}" href="{{route('roles.index')}}">
-                        <span class="nav-main-link-name">Раздача ролей</span>
+                        <span class="nav-main-link-name">Выдача/удаление ролей</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
@@ -81,7 +81,7 @@
                 </li>
             </ul>
             <div class="mt-lg-8">
-                <span class="nav-main-link-name">Облако тегов</span>
+                <span class="nav-main-link-name">Все теги: </span>
                 @include('loans.tags', ['tags' => $tagsCloud])
             </div>
         </div>

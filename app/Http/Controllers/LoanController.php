@@ -7,7 +7,6 @@ use App\Http\Requests\StoreLoanRequest;
 use App\Http\Requests\UpdateLoanRequest;
 use App\Models\Loan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 
 class LoanController extends Controller
 {

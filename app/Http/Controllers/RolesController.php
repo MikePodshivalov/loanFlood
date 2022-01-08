@@ -23,4 +23,12 @@ class RolesController extends Controller
         $user[0]->assignRole($request['role']);
         return redirect()->route('roles.index');
     }
+
+    public function destroy(Request $request)
+    {
+        $user = User::where('name', $request['user'])->get();
+        $user[0]->removeRole($request['role']);
+        return redirect()->route('roles.index');
+    }
+
 }

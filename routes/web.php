@@ -47,6 +47,7 @@ Route::get('/searchINN/found', [DadataController::class, 'show'])->name('searchI
 
 Route::get('/roles', [RolesController::class, 'index'])->name('roles.index')->middleware('auth');
 Route::post('/roles', [RolesController::class, 'store'])->name('roles.store')->middleware('auth');
+Route::post('/roles/delete', [RolesController::class, 'destroy'])->name('roles.destroy')->middleware('auth');
 
 
 //Route::view('/login', 'login')->name('login');

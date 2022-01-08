@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Mail\LoanCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -67,12 +68,16 @@ class Loan extends Model
     {
         parent::boot();
         static::created(function ($loan) {
-            \Mail::to('mapodshivalov@gmail.com')->send(
+            $emails = User::role('km_main')->pluck('email');
+            \Mail::to($emails)->send(
                 new LoanCreated($loan)
             );
         });
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function tags()
     {
         return $this->belongsToMany(\App\Models\Tag::class);

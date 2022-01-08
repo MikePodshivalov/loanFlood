@@ -29,6 +29,6 @@ class LoanCreated extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mail.loan-created');
+        return $this->subject('Создана новая заявка')->queue()->markdown('mail.loan-created');
     }
 }

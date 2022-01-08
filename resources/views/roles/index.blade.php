@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 @section('content')
     <div class="content content-full content-boxed mt-6">
-        <h3>Выдача/удаление ролей/разрешений верифицированным пользователям: </h3>
+        <h3>Выдача ролей/разрешений пользователям: </h3>
 
         <form action="{{ route('roles.store') }}" method="post" class="form-control" style="width: 1100px;">
             @csrf
@@ -26,7 +26,8 @@
             <button type="submit" class="btn btn-primary mt-3">Выдать</button>
         </form>
 
-        <form action="{{ route('roles.store') }}" method="post" class="mt-2 form-control" style="width: 1100px;">
+        <h3 class="mt-3">Удаление ролей/разрешений пользователей: </h3>
+        <form action="{{ route('roles.destroy') }}" method="post" class="mt-2 form-control" style="width: 1100px;">
             @csrf
             <select class="form-select" id="user" name="user" style="width: 350px; display: inline-block">
                 <option selected="">Выбрать пользователя</option>
