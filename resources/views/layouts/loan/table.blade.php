@@ -56,12 +56,14 @@
                                     <a data-tooltip="Подробнее" style="font-size: xx-small;" href="{{ route('loans.show', $loan) }}">
                                         <i class="far fa-2x fa-eye"></i>
                                     </a>
-                                    <a data-tooltip="Редактирование" style="font-size: xx-small;" href="{{ route('loans.edit', $loan) }}">
-                                        <i class="far fa-2x fa-edit"></i>
-                                    </a>
+                                    @if(Auth::user()->hasPermissionTo('edit loan') || Auth::user()->hasAnyRole('km', 'km_main'))
+                                        <a data-tooltip="Редактирование" style="font-size: xx-small;" href="{{ route('loans.edit', $loan) }}">
+                                            <i class="far fa-2x fa-edit"></i>
+                                        </a>
                                         <a data-tooltip="Удаление" style="font-size: xx-small;" href="#" onclick="document.getElementById('form-id-{{$loan->id}}').submit();">
                                             <i class="far fa-2x fa-window-close"></i>
                                         </a>
+                                    @endif
                                 </form>
 
                             </td>

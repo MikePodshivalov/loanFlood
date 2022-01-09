@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Mail\LoanCreated;
+use App\Events\LoanCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -64,16 +64,9 @@ class Loan extends Model
 
     protected $guarded = [];
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::created(function ($loan) {
-            $emails = User::role('km_main')->pluck('email');
-            \Mail::to($emails)->send(
-                new LoanCreated($loan)
-            );
-        });
-    }
+    protected $dispatchesEvents = [
+        'created' => LoanCreated::class,
+    ];
 
     /**
      * @return BelongsToMany

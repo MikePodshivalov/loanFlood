@@ -48,25 +48,12 @@
                 </tr>
                 </tbody>
             </table>
-            <h4 class="display-8 mb-0 text-center mt-1">Исполнители: </h4>
-            <table id="path-table" class="table longPath mt-0">
-                <thead>
-                    <tr>
-                        <th class="text-center" style="width: 15%">От УКК</th>
-                        <th class="text-center" style="width: 15%">От ЗС</th>
-                        <th class="text-center" style="width: 15%">От ПД</th>
-                        <th class="text-center" style="width: 15%">От ИАБ</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="text-center">УКК</td>
-                        <td class="text-center">ЗС</td>
-                        <td class="text-center">ПД</td>
-                        <td class="text-center">ИАБ</td>
-                    </tr>
-                </tbody>
-            </table>
+            @if(!empty($loan->description))
+                <h4 class="display-8 mb-0 text-center mt-1">Подробнее: </h4>
+                <div class="border border-secondary">
+                    <p class="m-lg-1">{{$loan->description}}</p>
+                </div>
+            @endif
             <h4 class="display-8 mb-1 text-center">Документы для работы: </h4>
             <table id="path-table" class="table longPath mt-1">
                 <thead>
@@ -84,6 +71,27 @@
                         <td class="text-center">{{$loan->pathPD}}</td>
                         <td class="text-center">{{$loan->pathIAB}}</td>
                     </tr>
+                </tbody>
+            </table>
+            <h4 class="display-8 mb-0 text-center mt-1">Исполнители: </h4>
+            <table id="path-table" class="table longPath mt-0">
+                <thead>
+                <tr>
+                    <th class="text-center" style="width: 15%">От ДКБ</th>
+                    <th class="text-center" style="width: 15%">От УКК</th>
+                    <th class="text-center" style="width: 15%">От ЗС</th>
+                    <th class="text-center" style="width: 15%">От ПД</th>
+                    <th class="text-center" style="width: 15%">От ИАБ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-center">ДКБ</td>
+                    <td class="text-center">УКК</td>
+                    <td class="text-center">ЗС</td>
+                    <td class="text-center">ПД</td>
+                    <td class="text-center">ИАБ</td>
+                </tr>
                 </tbody>
             </table>
             <a href="{{ URL::previous() }}"> <i class="far fa-arrow-alt-circle-left"></i></a>

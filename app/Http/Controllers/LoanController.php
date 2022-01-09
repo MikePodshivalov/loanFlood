@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Synchronizable;
+use App\Events\LoanCreated;
 use App\Http\Requests\StoreLoanRequest;
 use App\Http\Requests\UpdateLoanRequest;
 use App\Models\Loan;

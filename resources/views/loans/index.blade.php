@@ -2,11 +2,13 @@
 @section('content')
     <div class="content content-full content-boxed">
         <div class="content">
-            <div class="block-content block-content-full">
-                <button class="btn-hero btn-primary" onclick="window.location='{{route('loans.create')}}'">
-                    Создать новую заявку
-                </button>
-            </div>
+            @if(Auth::user()->hasPermissionTo('create loan') || Auth::user()->hasAnyRole('km', 'km_main'))
+                <div class="block-content block-content-full">
+                    <button class="btn-hero btn-primary" onclick="window.location='{{route('loans.create')}}'">
+                        Создать новую заявку
+                    </button>
+                </div>
+            @endif
         </div>
         <div class="block block-rounded">
             <div class="block-content block-content-full">

@@ -49,19 +49,23 @@
                         {{--                        <span class="nav-main-link-badge badge rounded-pill bg-primary">5</span>--}}
                     </a>
                 </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{Route::currentRouteName() === 'deleted' ? ' active' : '' }}" href="{{route('deleted')}}">
-                        <span class="nav-main-link-name">Удаленные заявки</span>
-                    </a>
-                </li>
+                @if(Auth::user()->hasAnyRole('ukk_main', 'admin'))
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{Route::currentRouteName() === 'deleted' ? ' active' : '' }}" href="{{route('deleted')}}">
+                            <span class="nav-main-link-name">Удаленные заявки</span>
+                        </a>
+                    </li>
+                @endif
+                @if(Auth::user()->hasRole('admin'))
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{str_contains(Route::currentRouteName(), 'roles') ? ' active' : '' }}" href="{{route('roles.index')}}">
+                            <span class="nav-main-link-name">Выдача/удаление ролей</span>
+                        </a>
+                    </li>
+                @endif
                 <li class="nav-main-item">
                     <a class="nav-main-link{{str_contains(Route::currentRouteName(), 'searchINN') ? ' active' : '' }}" href="{{route('searchINN')}}">
                         <span class="nav-main-link-name">Реквизиты по ИНН</span>
-                    </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{str_contains(Route::currentRouteName(), 'roles') ? ' active' : '' }}" href="{{route('roles.index')}}">
-                        <span class="nav-main-link-name">Выдача/удаление ролей</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
