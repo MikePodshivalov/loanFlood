@@ -27,9 +27,9 @@ class SendLoanCreatedNotification
      */
     public function handle(LoanCreated $event)
     {
-        $emails = User::role('km_main')->pluck('email');
-        \Mail::to($emails)->send(
-            new \App\Mail\LoanCreated($event->loan)
+        $emails = User::role('km_main')->pluck('email')->toArray();
+        \Mail::to($emails)
+            ->queue(new \App\Mail\LoanCreated($event->loan)
         );
     }
 }

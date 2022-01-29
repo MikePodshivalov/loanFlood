@@ -49,7 +49,7 @@
                 </tbody>
             </table>
             @if(!empty($loan->description))
-                <h4 class="display-8 mb-0 text-center mt-1">Подробнее: </h4>
+                <h4 class="display-8 mb-0 text-center mt-1">Описание: </h4>
                 <div class="border border-secondary">
                     <p class="m-lg-1">{{$loan->description}}</p>
                 </div>
@@ -58,10 +58,10 @@
             <table id="path-table" class="table longPath mt-1">
                 <thead>
                     <tr>
-                        <th class="text-center" scope="col" style="width: 15%">Документы для УКК</th>
-                        <th class="text-center" scope="col" style="width: 15%">Документы для ЗС</th>
-                        <th class="text-center" scope="col" style="width: 15%">Документы для ПД</th>
-                        <th class="text-center" scope="col" style="width: 15%">Документы для ИАБ</th>
+                        <th class="text-center" scope="col" style="width: 15%">Путь для УКК</th>
+                        <th class="text-center" scope="col" style="width: 15%">Путь для ЗС</th>
+                        <th class="text-center" scope="col" style="width: 15%">Путь для ПД</th>
+                        <th class="text-center" scope="col" style="width: 15%">Путь для ИАБ</th>
                     </tr>
                 </thead>
                 <tbody>

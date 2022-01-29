@@ -8,10 +8,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class LoanCreated extends Mailable
+class LoanCreated extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-    public $loan;
+    public Loan $loan;
     /**
      * Create a new message instance.
      *

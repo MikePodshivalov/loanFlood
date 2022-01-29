@@ -5,7 +5,7 @@
 <p>Заемщик/Принципал: {{$loan->name}}</p>
 <p>Тип заявки: {{$loan->type}}</p>
 @if($loan->amount)
-    <p>Сумма: {{$loan->amount}}</p>
+    <p>Сумма: {{$loan->amount}} млн.руб.</p>
 @endif
 <p>Создатель заявки: {{$loan->creator}}</p>
 @if($loan->description)

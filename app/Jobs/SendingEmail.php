@@ -2,6 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Events\LoanCreated;
+use App\Models\Loan;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
