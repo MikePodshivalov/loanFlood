@@ -41,11 +41,17 @@ class Executor extends Model
         return $this->belongsTo(Loan::class);
     }
 
-    public static function noteAboutTheNotificationToKM($id)
+    public static function noteAboutTheNotificationToKM(Loan $loan)
     {
         self::create([
-            'loan_id' => $id,
+            'loan_id' => $loan->id,
             'notify_ukk_main' => 1,
+            'km' => $loan->creator,
         ]);
+    }
+
+    public function executors()
+    {
+        return $this->hasOne(Executor::class);
     }
 }

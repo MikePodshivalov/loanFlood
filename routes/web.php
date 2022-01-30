@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DadataController;
+use App\Http\Controllers\ExecutorController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\TagsController;
@@ -32,6 +33,10 @@ Route::group(['middleware' => ['verified']], function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     Route::view('/email/verify', 'auth.verify-email')->name('verify');
+});
+
+Route::group(['middleware' => ['verified']], function () {
+    Route::post('/executor', [ExecutorController::class, 'update'])->name('executor.update');
 });
 
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');

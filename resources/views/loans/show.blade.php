@@ -88,24 +88,97 @@
                 <tr>
                     <td class="text-center">
                         @if(Auth::user()->hasRole('km_main'))
-                            <select class="form-select" id="option-km" name="km" required>
-                                @foreach($listOfUserRole['km'] as $user)
-                                    <option value="{{$user}}" {{old('type') == $type ? "selected" : ""}}>{{$type}}</option>
-                                @endforeach
-                            </select>
+                            <form action="{{route('executor.update')}}" method="post">
+                                @csrf
+                                <select class="form-select text-center" id="option-km" name="km" onchange="this.form.submit()">
+                                    @foreach($listOfUserRole['km'] as $user)
+                                        <option class="text-center" value="{{$user}}" {{$loan->executors->km == $user ? "selected" : ""}}>{{$user}}</option>
+                                    @endforeach
+                                    @if($loan->executors->km === null)
+                                        <option class="text-center" value="" selected>...</option>
+                                    @endif
+                                </select>
+                                <input type="text" name="id" value="{{$loan->id}}" hidden>
+                            </form>
                         @else
                             {{ $loan->executors->km ?? '' }}
                         @endif
                     </td>
-
-                    <td class="text-center">{{ $loan->executors->ukk ?? '' }}</td>
-                    <td class="text-center">{{ $loan->executors->zs ?? '' }}</td>
-                    <td class="text-center">{{ $loan->executors->pd ?? '' }}</td>
-                    <td class="text-center">{{ $loan->executors->iab ?? '' }}</td>
+                    <td class="text-center">
+                        @if(Auth::user()->hasRole('ukk_main'))
+                            <form action="{{route('executor.update')}}" method="post">
+                                @csrf
+                                <select class="form-select text-center" id="option-ukk" name="ukk" onchange="this.form.submit()">
+                                    @foreach($listOfUserRole['ukk'] as $user)
+                                        <option class="text-center" value="{{$user}}" {{$loan->executors->ukk == $user ? "selected" : ""}}>{{$user}}</option>
+                                    @endforeach
+                                    @if($loan->executors->ukk === null)
+                                        <option class="text-center" value="" selected>...</option>
+                                    @endif
+                                </select>
+                                <input type="text" name="id" value="{{$loan->id}}" hidden>
+                            </form>
+                        @else
+                            {{ $loan->executors->ukk ?? '' }}
+                        @endif
+                    </td>
+                    <td class="text-center">
+                        @if(Auth::user()->hasRole('zs_main'))
+                            <form action="{{route('executor.update')}}" method="post">
+                                @csrf
+                                <select class="form-select text-center" id="option-zs" name="zs" onchange="this.form.submit()">
+                                    @foreach($listOfUserRole['zs'] as $user)
+                                        <option class="text-center" value="{{$user}}" {{$loan->executors->zs == $user ? "selected" : ""}}>{{$user}}</option>
+                                    @endforeach
+                                    @if($loan->executors->zs === null)
+                                        <option class="text-center" value="" selected>...</option>
+                                    @endif
+                                </select>
+                                <input type="text" name="id" value="{{$loan->id}}" hidden>
+                            </form>
+                        @else
+                            {{ $loan->executors->zs ?? '' }}
+                        @endif
+                    </td>
+                    <td class="text-center">
+                        @if(Auth::user()->hasRole('pd_main'))
+                            <form action="{{route('executor.update')}}" method="post">
+                                @csrf
+                                <select class="form-select text-center" id="option-pd" name="pd" onchange="this.form.submit()">
+                                    @foreach($listOfUserRole['pd'] as $user)
+                                        <option class="text-center" value="{{$user}}" {{$loan->executors->pd == $user ? "selected" : ""}}>{{$user}}</option>
+                                    @endforeach
+                                    @if($loan->executors->pd === null)
+                                        <option class="text-center" value="" selected>...</option>
+                                    @endif
+                                </select>
+                                <input type="text" name="id" value="{{$loan->id}}" hidden>
+                            </form>
+                        @else
+                            {{ $loan->executors->pd ?? '' }}
+                        @endif
+                    </td>
+                    <td class="text-center">
+                        @if(Auth::user()->hasRole('iab_main'))
+                            <form action="{{route('executor.update')}}" method="post">
+                                @csrf
+                                <select class="form-select text-center" id="option-iab" name="iab" onchange="this.form.submit()">
+                                    @foreach($listOfUserRole['iab'] as $user)
+                                        <option class="text-center" value="{{$user}}" {{$loan->executors->iab == $user ? "selected" : ""}}>{{$user}}</option>
+                                    @endforeach
+                                    @if($loan->executors->iab === null)
+                                            <option class="text-center" value="" selected>...</option>
+                                    @endif
+                                </select>
+                                <input type="text" name="id" value="{{$loan->id}}" hidden>
+                            </form>
+                        @else
+                            {{ $loan->executors->iab ?? '' }}
+                        @endif
+                    </td>
                 </tr>
                 </tbody>
             </table>
-            <h1>sdfksdf</h1>
             <a href="{{ URL::previous() }}"> Назад </a>
         </div>
     </div>

@@ -15,11 +15,11 @@ class CreateExecutorsTable extends Migration
     {
         Schema::create('executors', function (Blueprint $table) {
             $table->foreignID('loan_id')->constrained();
-            $table->foreign('ukk')->references('id')->on('users');
-            $table->integer('pd')->nullable();
-            $table->integer('zs')->nullable();
-            $table->integer('iab')->nullable();
-            $table->integer('km')->nullable();
+            $table->string('ukk', 20)->nullable();
+            $table->string('pd', 20)->nullable();
+            $table->string('zs', 20)->nullable();
+            $table->string('iab', 20)->nullable();
+            $table->string('km', 20)->nullable();
             $table->boolean('notify_ukk_main')->nullable();
             $table->boolean('published')->nullable();
         });

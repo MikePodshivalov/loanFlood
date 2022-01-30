@@ -26,8 +26,8 @@ class UserSeeder extends Seeder
             'role' => 'km_main'
         ],
         [
-            'name' => 'Усенкова Елена',
-            'email' => 'eausenkova@gmail.com',
+            'name' => 'Анна Усенкова',
+            'email' => 'aeusenkova@gmail.com',
             'role' => 'km'
         ],
         [

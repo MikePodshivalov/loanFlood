@@ -43,7 +43,7 @@ class LoanController extends Controller
     {
         $validated = $request->validated();
         $loan = Loan::create($validated);
-        Executor::noteAboutTheNotificationToKM($loan->id);
+        Executor::noteAboutTheNotificationToKM($loan);
         if (!is_null($request['tags'])) {
             $tags = $request->getTagsFromRequest();
             $tagsSynchronizer->sync($tags, $loan);
@@ -60,7 +60,6 @@ class LoanController extends Controller
     public function show(Loan $loan)
     {
         $loan->load(['statuses', 'executors']);
-        User::replaceNameWithSurnameUser($loan);
         return view('loans.show', compact('loan'));
     }
 
