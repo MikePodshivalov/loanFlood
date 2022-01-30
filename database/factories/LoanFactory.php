@@ -19,7 +19,7 @@ class LoanFactory extends Factory
         return [
             'name' => Arr::random(['ООО', 'АО', 'ПАО']) . ' "' . $faker->text(rand(5, 20)) . '"',
             'group' => Arr::random([null, Str::random(5)]),
-            'inn' => Arr::random([rand(1000000000, 9999999999), rand(100000000000, 999999999999)]),
+            'initiator' => Arr::random(['СВ', 'ЕА', 'ДК', 'ЮВ', 'ЮЮ', 'Барнаул', 'Новосибирск', 'РБ', 'АА', 'Архангельск', 'Ярославль']),
             'type' => Arr::random(config('loanproduct')),
             'amount' => Arr::random([100, 500, 50, 10, 5, 1000, 1500, 300, 800, 210, 250, 2500, 1800, 1400, 900, 60, 75, 43, 700]),
             'zs' => Arr::random([null, 1]),

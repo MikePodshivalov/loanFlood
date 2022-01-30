@@ -17,7 +17,7 @@ class CreateLoansTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('group')->nullable();
-            $table->string('inn',12);
+            $table->string('initiator',20);
             $table->string('type', 50);
             $table->unsignedInteger('amount')->nullable();
             $table->boolean('zs')->nullable();

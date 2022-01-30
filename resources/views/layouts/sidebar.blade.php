@@ -39,20 +39,20 @@
             <ul class="nav-main">
                 <li class="nav-main-item">
                     <a class="nav-main-link{{Route::currentRouteName() === 'home' ? ' active' : '' }}" href="{{route('home')}}">
-                        <span class="nav-main-link-name">Главная</span>
+                        <span class="nav-main-link-name">Мои задачи</span>
 {{--                        <span class="nav-main-link-badge badge rounded-pill bg-primary">5</span>--}}
                     </a>
                 </li>
                 <li class="nav-main-item">
                     <a class="nav-main-link{{str_contains(Route::currentRouteName(), 'loans') ? ' active' : '' }}" href="{{route('loans.index')}}">
-                        <span class="nav-main-link-name">Заявки</span>
+                        <span class="nav-main-link-name">Все задачи</span>
                         {{--                        <span class="nav-main-link-badge badge rounded-pill bg-primary">5</span>--}}
                     </a>
                 </li>
                 @if(Auth::user()->hasAnyRole('ukk_main', 'admin'))
                     <li class="nav-main-item">
                         <a class="nav-main-link{{Route::currentRouteName() === 'deleted' ? ' active' : '' }}" href="{{route('deleted')}}">
-                            <span class="nav-main-link-name">Удаленные заявки</span>
+                            <span class="nav-main-link-name">Удаленные задачи</span>
                         </a>
                     </li>
                 @endif

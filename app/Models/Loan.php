@@ -56,6 +56,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Loan wherePd($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Loan whereUkk($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Loan whereZs($value)
+ * @property string $initiator
+ * @property string|null $pathZS
+ * @property string|null $pathPD
+ * @property string|null $pathIAB
+ * @property string|null $pathUKK
+ * @property-read \App\Models\Executor|null $executors
+ * @property-read \App\Models\Status|null $statuses
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
+ * @property-read int|null $tags_count
+ * @method static \Illuminate\Database\Query\Builder|Loan onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Loan whereInitiator($value)
+ * @method static \Illuminate\Database\Query\Builder|Loan withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Loan withoutTrashed()
  */
 class Loan extends Model
 {
@@ -74,5 +87,15 @@ class Loan extends Model
     public function tags()
     {
         return $this->belongsToMany(\App\Models\Tag::class);
+    }
+
+    public function executors()
+    {
+        return $this->hasOne(Executor::class);
+    }
+
+    public function statuses()
+    {
+        return $this->hasOne(Status::class);
     }
 }

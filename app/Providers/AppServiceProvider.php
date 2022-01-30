@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Contracts\Synchronizable;
 use App\Models\Tag;
+use App\Models\User;
 use App\Services\TagsSynchronizer;
 use Dadata\DadataClient;
 use Illuminate\Support\ServiceProvider;
+use Nette\Utils\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->composer('layouts.sidebar', function ($view) {
             $view->with('tagsCloud', Tag::tagsCloud());
+        });
+
+        view()->composer('loans.show', function ($view) {
+            $view->with('listOfUserRole', User::listOfUserRole());
         });
     }
 }

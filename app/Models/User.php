@@ -6,8 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
+use phpDocumentor\Reflection\Types\Integer;
 use Spatie\Permission\Traits\HasRoles;
+use function PHPUnit\Framework\isEmpty;
 
 /**
  * App\Models\User
@@ -37,6 +40,12 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
+ * @property-read int|null $permissions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
+ * @property-read int|null $roles_count
+ * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
+ * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -71,4 +80,29 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function replaceNameWithSurnameUser(Loan $loan) : Loan
+    {
+        if( isset($loan->executors) ) {
+            $loan->executors->km = $loan->executors->km ? explode(' ', (new self)->where('id', $loan->executors->km)->first()->name)[1] : '';
+            $loan->executors->ukk = $loan->executors->ukk ? explode(' ', (new self)->where('id', $loan->executors->ukk)->first()->name)[1] : '';
+            $loan->executors->zs = $loan->executors->zs ? explode(' ', (new self)->where('id', $loan->executors->zs)->first()->name)[1] : '';
+            $loan->executors->iab = $loan->executors->iab ? explode(' ', (new self)->where('id', $loan->executors->iab)->first()->name)[1] : '';
+            $loan->executors->pd = $loan->executors->pd ? explode(' ', (new self)->where('id', $loan->executors->pd)->first()->name)[1] : '';
+        }
+        return $loan;
+    }
+
+    public static function listOfUserRole()
+    {
+        $listOfUserRole = [
+          'km' => User::role('km')->pluck('name')->toArray(),
+          'ukk' => User::role('ukk')->pluck('name')->toArray(),
+          'zs' => User::role('zs')->pluck('name')->toArray(),
+          'iab' => User::role('iab')->pluck('name')->toArray(),
+          'pd' => User::role('pd')->pluck('name')->toArray(),
+        ];
+
+        return $listOfUserRole;
+    }
 }

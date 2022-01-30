@@ -4,7 +4,7 @@
         <div class="col-xl-8">
 
             <div class="mb-3">
-                <label class="form-label" for="text-name">Краткое наименование заемщика<span class="text-danger">*</span></label>
+                <label class="form-label" for="text-name">Краткое наименование заемщика/принципала<span class="text-danger">*</span></label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="text-name" value="{{old('name')}}" name="name" placeholder="Наименование заемщика" required>
                 @error('name')
                 <div class="alert alert-danger">{{ $message }}</div>
@@ -20,9 +20,9 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label" for="text-inn">ИНН<span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('inn') is-invalid @enderror" id="text-inn" value="{{old('inn')}}" name="inn" placeholder="ИНН" required>
-                @error('inn')
+                <label class="form-label" for="text-initiator">Инициатор<span class="text-danger">*</span></label>
+                <input type="text" class="form-control @error('initiator') is-invalid @enderror" id="text-initiator" value="{{old('initiator')}}" name="initiator" placeholder="Инициатор" required>
+                @error('initiator')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>

@@ -27,7 +27,7 @@ class StoreLoanRequest extends FormRequest
         return [
             'name' => ['required', 'min:4', 'max:255'],
             'group' => ['max:255'],
-            'inn' => ['required', 'min:10', 'max:12'],
+            'initiator' => ['required', 'min:2', 'max:20'],
             'type' => Rule::in(config('loanproduct')),
             'amount' => ['nullable', 'max:10000', 'numeric'],
             'creator' => ['required', 'max:255'],

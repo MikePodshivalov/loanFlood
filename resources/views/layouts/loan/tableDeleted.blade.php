@@ -1,19 +1,19 @@
 <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
     <div class="row">
         <div id="example_wrapper" class="col-xl-12 dataTables_wrapper">
-            <table class="myTable display nowrap dataTable dtr-inline collapsed">
+            <table class="table-hover table-bordered">
                 <thead>
                 <tr>
-                    <th class="text-center" style="width: 80px;">
+                    <th class="text-center" style="width: 7%;">
                         Id
                     </th>
                     <th class="text-center" style="width: 25%;">
                         Заемщик
                     </th>
                     <th class="text-center" style="width: 10%;">
-                        ИНН
+                        Инициатор
                     </th>
-                    <th class="text-center" style="width: 8%;">
+                    <th class="text-center" style="width: 15%;">
                         Тип
                     </th>
                     <th class="text-center" style="width: 10%;">
@@ -25,7 +25,7 @@
                     <th style="width: 10%;" class="text-center">
                         Дата удаления
                     </th>
-                    <th style="width: 15%;" class="text-center">
+                    <th style="width: 10%;" class="text-center">
                         Действия
                     </th>
                 </tr>
@@ -41,7 +41,7 @@
                                 <b>{{$loan->name}}</b>
                             </td>
                             <td class="text-center">
-                                {{$loan->inn}}
+                                {{$loan->initiator}}
                             </td>
                             <td class="text-center">
                                 {{$loan->type}}
@@ -77,6 +77,11 @@
                 @endif
                 </tbody>
             </table>
+        </div>
+        <div class="dataTables_paginate paging_simple_numbers">
+            <ul class="pagination">
+                {{ $loans->links('vendor.pagination.bootstrap-4') }}
+            </ul>
         </div>
     </div>
 </div>

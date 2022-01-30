@@ -10,23 +10,23 @@
                 <thead>
                 <tr>
                     <th class="text-center" scope="col" style="width: 60px">ID</th>
-                    <th class="text-center" scope="col" style="width: 80px">Группа</th>
-                    <th class="text-center" scope="col">ИНН</th>
+                    <th class="text-center" scope="col" style="width: 160px">Группа</th>
+                    <th class="text-center" scope="col">Инициатор</th>
                     <th class="text-center" scope="col" style="width: 100px">Млн.руб.</th>
                     <th class="text-center" scope="col">Кем создана</th>
                     <th class="text-center" scope="col" style="width: 150px">Дата создания</th>
                     <th class="text-center" scope="col">Закл. ЗС</th>
                     <th class="text-center" scope="col">Закл. ПД</th>
                     <th class="text-center" scope="col">Закл. ИАБ</th>
-                    <th class="text-center" scope="col">КСОВ</th>
-                    <th class="text-center" scope="col">КК</th>
+                    <th class="text-center" scope="col" style="width: 80px">КСОВ</th>
+                    <th class="text-center" scope="col" style="width: 80px">КК</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td class="text-center">{{$loan->id}}</td>
                     <td class="text-center">{{$loan->group}}</td>
-                    <td class="text-center">{{$loan->inn}}</td>
+                    <td class="text-center">{{$loan->initiator}}</td>
                     <td class="text-center">{{number_format($loan->amount, 0, ' ', ' ')}}</td>
                     <td class="text-center">{{$loan->creator}}</td>
                     <td class="text-center">{{date('d-m-Y', strtotime($loan->created_at))}}</td>
@@ -86,15 +86,27 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td class="text-center">ДКБ</td>
-                    <td class="text-center">УКК</td>
-                    <td class="text-center">ЗС</td>
-                    <td class="text-center">ПД</td>
-                    <td class="text-center">ИАБ</td>
+                    <td class="text-center">
+                        @if(Auth::user()->hasRole('km_main'))
+                            <select class="form-select" id="option-km" name="km" required>
+                                @foreach($listOfUserRole['km'] as $user)
+                                    <option value="{{$user}}" {{old('type') == $type ? "selected" : ""}}>{{$type}}</option>
+                                @endforeach
+                            </select>
+                        @else
+                            {{ $loan->executors->km ?? '' }}
+                        @endif
+                    </td>
+
+                    <td class="text-center">{{ $loan->executors->ukk ?? '' }}</td>
+                    <td class="text-center">{{ $loan->executors->zs ?? '' }}</td>
+                    <td class="text-center">{{ $loan->executors->pd ?? '' }}</td>
+                    <td class="text-center">{{ $loan->executors->iab ?? '' }}</td>
                 </tr>
                 </tbody>
             </table>
-            <a href="{{ URL::previous() }}"> <i class="far fa-arrow-alt-circle-left"></i></a>
+            <h1>sdfksdf</h1>
+            <a href="{{ URL::previous() }}"> Назад </a>
         </div>
     </div>
 </div>

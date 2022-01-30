@@ -21,12 +21,13 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label" for="text-inn">ИНН<span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('inn') is-invalid @enderror" id="text-inn" value="{{old('inn', $loan->inn ?? '')}}" name="inn" placeholder="ИНН" required>
-                @error('inn')
+                <label class="form-label" for="text-initiator">Инициатор<span class="text-danger">*</span></label>
+                <input type="text" class="form-control @error('initiator') is-invalid @enderror" id="text-initiator" value="{{old('initiator', $loan->initiator ?? '')}}" name="initiator" placeholder="Инициатор" required>
+                @error('initiator')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label class="form-label" for="option-type">Тип кредитного продукта<span class="text-danger">*</span></label>
                 <select class="form-select @error('type') is-invalid @enderror" id="option-type" name="type" required>
