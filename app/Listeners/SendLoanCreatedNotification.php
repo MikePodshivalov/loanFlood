@@ -4,8 +4,8 @@ namespace App\Listeners;
 
 use App\Events\LoanCreated;
 use App\Models\User;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Auth;
 
 class SendLoanCreatedNotification
 {
@@ -27,9 +27,11 @@ class SendLoanCreatedNotification
      */
     public function handle(LoanCreated $event)
     {
-        $emails = User::role('km_main')->pluck('email')->toArray();
-        \Mail::to($emails)
-            ->queue(new \App\Mail\LoanCreated($event->loan)
-        );
+        if(Auth::user()->hasAnyRole('km', 'km_main')) {
+            $emails = User::role('km_main')->pluck('email')->toArray();
+            \Mail::to($emails)
+                ->queue(new \App\Mail\LoanCreated($event->loan)
+                );
+        }
     }
 }

@@ -54,4 +54,23 @@ class Executor extends Model
     {
         return $this->hasOne(Executor::class);
     }
+
+    public static function customUpdate($request)
+    {
+        $updateArray = [];
+        if(isset($request->km)) {
+            $updateArray['km'] = $request->km;
+        } elseif(isset($request->ukk)) {
+            $updateArray['ukk'] = $request->ukk;
+        } elseif(isset($request->zs)) {
+            $updateArray['zs'] = $request->zs;
+        } elseif(isset($request->pd)) {
+            $updateArray['pd'] = $request->pd;
+        } elseif(isset($request->iab)) {
+            $updateArray['iab'] = $request->iab;
+        } else {
+            return false;
+        }
+        return $updateArray;
+    }
 }
