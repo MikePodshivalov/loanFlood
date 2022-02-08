@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Contracts\Synchronizable;
 use App\Http\Requests\StoreLoanRequest;
 use App\Http\Requests\UpdateLoanRequest;
+use App\Models\Difficulty;
 use App\Models\Executor;
 use App\Models\Loan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoanController extends Controller
 {
@@ -17,9 +19,9 @@ class LoanController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $loans = Loan::latest()->whereNull('deleted_at')->with('tags')->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
+        $loans = Loan::loansOfDepartment();
         return view('loans.index', compact('loans'));
     }
 
@@ -44,6 +46,7 @@ class LoanController extends Controller
         $validated = $request->validated();
         $loan = Loan::create($validated);
         Executor::noteAboutTheNotificationToKM($loan);
+        Difficulty::setDifficultyToOne($loan->id);
         if (!is_null($request['tags'])) {
             $tags = $request->getTagsFromRequest();
             $tagsSynchronizer->sync($tags, $loan);
@@ -59,7 +62,7 @@ class LoanController extends Controller
      */
     public function show(Loan $loan)
     {
-        $loan->load(['statuses', 'executors']);
+        $loan->load(['statuses', 'executors', 'difficulties']);
         return view('loans.show', compact('loan'));
     }
 
@@ -124,6 +127,12 @@ class LoanController extends Controller
             Loan::onlyTrashed()->find($id)->forceDelete();
         }
         return redirect ('deleted');
+    }
+
+    public function homeIndex(Request $request)
+    {
+        $loans = Loan::loansOfExecutor($request->user()->name);
+        return view('loans.index', compact('loans'));
     }
 
 }

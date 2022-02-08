@@ -73,4 +73,11 @@ class Executor extends Model
         }
         return $updateArray;
     }
+
+    public static function setPublished($id) : void
+    {
+        self::where('loan_id', $id)->update([
+            'published' => 1
+        ]);
+    }
 }

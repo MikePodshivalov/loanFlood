@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * App\Models\Loan
@@ -94,8 +95,75 @@ class Loan extends Model
         return $this->hasOne(Executor::class);
     }
 
+    public function difficulties()
+    {
+        return $this->hasOne(Difficulty::class);
+    }
+
     public function statuses()
     {
         return $this->hasOne(Status::class);
     }
+
+    public static function loansOfDepartment()
+    {
+        if(Auth::user()->hasAnyRole(['admin', 'km_main'])) {
+            return self::latest()->whereNull('deleted_at')->with('tags')
+                ->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
+        } elseif (Auth::user()->hasRole(['zs_main'])) {
+            return self::latest()->whereNull('deleted_at')->with('tags')
+                ->join('executors', 'loans.id', '=', 'executors.loan_id')
+                ->where('executors.zs', '<>', null)
+                ->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
+        } elseif (Auth::user()->hasRole(['pd_main'])) {
+            return self::latest()->whereNull('deleted_at')->with('tags')
+                ->join('executors', 'loans.id', '=', 'executors.loan_id')
+                ->where('executors.pd', '<>', null)
+                ->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
+        } elseif (Auth::user()->hasRole(['ukk_main'])) {
+            return self::latest()->whereNull('deleted_at')->with('tags')
+                ->join('executors', 'loans.id', '=', 'executors.loan_id')
+                ->where('executors.ukk', '<>', null)
+                ->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
+        } elseif (Auth::user()->hasRole(['iab_main'])) {
+            return self::latest()->whereNull('deleted_at')->with('tags')
+                ->join('executors', 'loans.id', '=', 'executors.loan_id')
+                ->where('executors.iab', '<>', null)
+                ->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
+        }
+        return false;
+    }
+
+    public static function getEmailsOfDepartments(Loan $loan) : array
+    {
+        $emails = '';
+        if ($loan->ukk) {
+            $emails .= User::role('ukk_main')->pluck('email')->implode(',') . ',';
+        }
+        if ($loan->zs) {
+            $emails .= User::role('zs_main')->pluck('email')->implode(',') . ',';
+        }
+        if ($loan->pd) {
+            $emails .= User::role('pd_main')->pluck('email')->implode(',') . ',';
+        }
+        if ($loan->iab) {
+            $emails .= User::role('iab_main')->pluck('email')->implode(',') . ',';
+        }
+        $emailsArray = explode(',', $emails);
+        array_pop($emailsArray);
+        return $emailsArray;
+    }
+
+    public static function loansOfExecutor(string $name)
+    {
+        return self::latest()->whereNull('deleted_at')->with('tags')
+            ->join('executors', 'loans.id', '=', 'executors.loan_id')
+            ->where('executors.ukk', '=', $name)
+            ->orWhere('executors.pd', '=', $name)
+            ->orWhere('executors.zs', '=', $name)
+            ->orWhere('executors.iab', '=', $name)
+            ->orWhere('executors.km', '=', $name)
+            ->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
+    }
+
 }

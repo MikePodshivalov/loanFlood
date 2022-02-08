@@ -7,6 +7,7 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Services\TagsSynchronizer;
 use Dadata\DadataClient;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Nette\Utils\Paginator;
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DadataController;
+use App\Http\Controllers\DifficultyController;
 use App\Http\Controllers\ExecutorController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\RolesController;
@@ -39,7 +40,20 @@ Route::group(['middleware' => ['verified']], function () {
     Route::post('/executor', [ExecutorController::class, 'update'])->name('executor.update');
 });
 
+Route::group(['middleware' => ['role:km_main']], function () {
+    Route::post('/executor/sendLoanToDepartments', [ExecutorController::class, 'sendLoanToDepartments'])->name('executor.sendLoanToDepartments');
+});
+
+Route::group(['middleware' => ['role:ukk|km|iab|pd|zs']], function () {
+    Route::get('/home', [LoanController::class, 'homeIndex'])->name('loans.homeIndex');
+    Route::post('/home', [LoanController::class, 'homeIndex'])->name('loans.homeIndex');
+});
+
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+
+Route::group(['middleware' => ['role:ukk_main']], function () {
+    Route::post('/difficulty', [DifficultyController::class, 'update'])->name('difficulty.update');
+});
 
 
 

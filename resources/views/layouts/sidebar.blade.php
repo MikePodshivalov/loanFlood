@@ -37,19 +37,29 @@
         <!-- Side Navigation -->
         <div class="content-side content-side-full">
             <ul class="nav-main">
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{Route::currentRouteName() === 'home' ? ' active' : '' }}" href="{{route('home')}}">
-                        <span class="nav-main-link-name">Мои задачи</span>
-{{--                        <span class="nav-main-link-badge badge rounded-pill bg-primary">5</span>--}}
-                    </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link{{str_contains(Route::currentRouteName(), 'loans') ? ' active' : '' }}" href="{{route('loans.index')}}">
-                        <span class="nav-main-link-name">Все задачи</span>
-                        {{--                        <span class="nav-main-link-badge badge rounded-pill bg-primary">5</span>--}}
-                    </a>
-                </li>
-                @if(Auth::user()->hasAnyRole('ukk_main', 'admin'))
+                @if(Auth::user()->hasAnyRole('ukk', 'km', 'pd', 'zs', 'iab'))
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{Route::currentRouteName() === 'loans.homeIndex' ? ' active' : '' }}" href="{{route('loans.homeIndex')}}">
+                            <span class="nav-main-link-name">Мои задачи</span>
+    {{--                        <span class="nav-main-link-badge badge rounded-pill bg-primary">5</span>--}}
+                        </a>
+                    </li>
+                @endif
+                @if(Auth::user()->hasAnyRole('ukk_main', 'km_main', 'pd_main', 'zs_main', 'iab_main'))
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{str_contains(Route::currentRouteName(), 'loans.index') ? ' active' : '' }}" href="{{route('loans.index')}}">
+                            <span class="nav-main-link-name">Задачи управления</span>
+                            {{--                        <span class="nav-main-link-badge badge rounded-pill bg-primary">5</span>--}}
+                        </a>
+                    </li>
+                @endif
+                @if(Auth::user()->hasAnyRole('admin'))
+                    <li class="nav-main-item">
+                        <a class="nav-main-link{{str_contains(Route::currentRouteName(), 'loans') ? ' active' : '' }}" href="{{route('loans.index')}}">
+                            <span class="nav-main-link-name">Все задачи</span>
+                            {{--                        <span class="nav-main-link-badge badge rounded-pill bg-primary">5</span>--}}
+                        </a>
+                    </li>
                     <li class="nav-main-item">
                         <a class="nav-main-link{{Route::currentRouteName() === 'deleted' ? ' active' : '' }}" href="{{route('deleted')}}">
                             <span class="nav-main-link-name">Удаленные задачи</span>

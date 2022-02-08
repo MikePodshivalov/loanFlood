@@ -81,18 +81,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-//    public static function replaceNameWithSurnameUser(Loan $loan) : Loan
-//    {
-//        if( isset($loan->executors) ) {
-//            $loan->executors->km = $loan->executors->km ? (new self)->where('id', $loan->executors->km)->first()->name : '';
-//            $loan->executors->ukk = $loan->executors->ukk ? (new self)->where('id', $loan->executors->ukk)->first()->name : '';
-//            $loan->executors->zs = $loan->executors->zs ? (new self)->where('id', $loan->executors->zs)->first()->name : '';
-//            $loan->executors->iab = $loan->executors->iab ? (new self)->where('id', $loan->executors->iab)->first()->name : '';
-//            $loan->executors->pd = $loan->executors->pd ? (new self)->where('id', $loan->executors->pd)->first()->name : '';
-//        }
-//        return $loan;
-//    }
-
     public static function listOfUserRole()
     {
         $listOfUserRole = [

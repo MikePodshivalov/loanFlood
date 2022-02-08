@@ -4,7 +4,31 @@
 <div class="content">
     <div class="block block-rounded">
         <div class="block-content block-content-full">
-            <h3 class="mb-0 display-7"><b>{{$loan->name}} ({{$loan->type}})</b></h3>
+
+            <div class="row">
+                <div class="col-sm-7">
+                    <h3 class="mb-0 display-7"><b>{{$loan->name}} ({{$loan->type}})</b></h3>
+                </div>
+                @if(Auth::user()->hasRole('ukk_main'))
+                    <div class="col">
+
+                        <form class="form-inline" action="{{route('difficulty.update')}}" method="post">
+                            @csrf
+                            <div class="col-sm-2">
+                                <label for="difficulty">Сложность:</label>
+                                <select class="form-select" id="difficulty" name="difficulty" onchange="this.form.submit()">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        <option class="text-center" value="{{$i}}" {{$loan->difficulties->difficulty == $i ? "selected" : ""}}>{{$i}}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <input type="text" name="id" value="{{$loan->id}}" hidden>
+                        </form>
+                    </div>
+
+                @endif
+            </div>
+
             @include('loans.tags', ['tags' => $loan->tags])
             <table class="table longPath">
                 <thead>
@@ -179,6 +203,9 @@
                 </tr>
                 </tbody>
             </table>
+            @if(is_null($loan->executors->published) && Auth::user()->hasRole('km_main'))
+                @include('layouts.loan.buttonSendLoan')
+            @endif
             <a href="{{ URL::previous() }}"> Назад </a>
         </div>
     </div>
