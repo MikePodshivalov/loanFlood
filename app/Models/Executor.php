@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * App\Models\Executor
@@ -43,11 +45,19 @@ class Executor extends Model
 
     public static function noteAboutTheNotificationToKM(Loan $loan)
     {
-        self::create([
-            'loan_id' => $loan->id,
-            'notify_ukk_main' => 1,
-            'km' => $loan->creator,
-        ]);
+        if(Auth::user()->hasAnyRole('km', 'km_main')) {
+            self::create([
+                'loan_id' => $loan->id,
+                'notify_ukk_main' => 1,
+                'km' => $loan->creator,
+                'km_start' => Carbon::now(),
+            ]);
+        } else {
+            self::create([
+                'loan_id' => $loan->id,
+                'notify_ukk_main' => 1,
+            ]);
+        }
     }
 
     public function executors()
@@ -79,5 +89,26 @@ class Executor extends Model
         self::where('loan_id', $id)->update([
             'published' => 1
         ]);
+    }
+
+    public static function setTimeOfStart($id)
+    {
+        $loan = self::select(['ukk_start', 'pd_start', 'zs_start', 'iab_start'])
+            ->where('loan_id', $id)->joinWhere('loans', 'id', '=', $id)
+            ->addSelect(['loans.ukk', 'loans.pd', 'loans.zs', 'loans.iab']);
+        $timeOfStartArray = [];
+        if($loan->get()[0]['ukk']) {
+            $timeOfStartArray['ukk_start'] = Carbon::now();
+        }
+        if($loan->get()[0]['pd']) {
+            $timeOfStartArray['pd_start'] = Carbon::now();
+        }
+        if($loan->get()[0]['zs']) {
+            $timeOfStartArray['zs_start'] = Carbon::now();
+        }
+        if($loan->get()[0]['iab']) {
+            $timeOfStartArray['iab_start'] = Carbon::now();
+        }
+        $loan->update($timeOfStartArray);
     }
 }

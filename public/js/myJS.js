@@ -13,3 +13,7 @@ showDivWithPath('pd');
 showDivWithPath('ukk');
 showDivWithPath('iab');
 
+
+async function copyPathToBuffer(path) {
+    await navigator.clipboard.writeText(path);
+}

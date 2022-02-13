@@ -51,7 +51,7 @@ class LoanController extends Controller
             $tags = $request->getTagsFromRequest();
             $tagsSynchronizer->sync($tags, $loan);
         }
-        return redirect()->route('loans.index');
+        return redirect()->route('home');
     }
 
     /**

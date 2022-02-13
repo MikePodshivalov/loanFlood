@@ -40,7 +40,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::post('/executor', [ExecutorController::class, 'update'])->name('executor.update');
 });
 
-Route::group(['middleware' => ['role:km_main']], function () {
+Route::group(['middleware' => ['role:km_main|admin']], function () {
     Route::post('/executor/sendLoanToDepartments', [ExecutorController::class, 'sendLoanToDepartments'])->name('executor.sendLoanToDepartments');
 });
 
@@ -51,7 +51,7 @@ Route::group(['middleware' => ['role:ukk|km|iab|pd|zs']], function () {
 
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
 
-Route::group(['middleware' => ['role:ukk_main']], function () {
+Route::group(['middleware' => ['role:ukk_main|admin']], function () {
     Route::post('/difficulty', [DifficultyController::class, 'update'])->name('difficulty.update');
 });
 

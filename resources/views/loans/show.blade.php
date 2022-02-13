@@ -6,7 +6,7 @@
         <div class="block-content block-content-full">
 
             <div class="row">
-                <div class="col-sm-7">
+                <div class="col-sm-6">
                     <h3 class="mb-0 display-7"><b>{{$loan->name}} ({{$loan->type}})</b></h3>
                 </div>
                 @if(Auth::user()->hasRole('ukk_main'))
@@ -15,7 +15,6 @@
                         <form class="form-inline" action="{{route('difficulty.update')}}" method="post">
                             @csrf
                             <div class="col-sm-2">
-                                <label for="difficulty">Сложность:</label>
                                 <select class="form-select" id="difficulty" name="difficulty" onchange="this.form.submit()">
                                     @for($i = 1; $i <= 5; $i++)
                                         <option class="text-center" value="{{$i}}" {{$loan->difficulties->difficulty == $i ? "selected" : ""}}>{{$i}}</option>
@@ -90,10 +89,38 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="text-center">{{$loan->pathUKK}}</td>
-                        <td class="text-center">{{$loan->pathZS}}</td>
-                        <td class="text-center">{{$loan->pathPD}}</td>
-                        <td class="text-center">{{$loan->pathIAB}}</td>
+                        <td class="text-center">
+                            @if($loan->pathUKK)
+                                <button id="pathUKK" value="{{$loan->pathUKK}}" class="btn-outline-primary"
+                                        onclick="copyPathToBuffer(document.getElementById('pathUKK').value)">
+                                    Скопировать
+                                </button>
+                            @endif
+                        </td>
+                        <td class="text-center">
+                            @if($loan->pathZS)
+                                <button id="pathZS" value="{{$loan->pathZS}}" class="btn-outline-primary"
+                                        onclick="copyPathToBuffer(document.getElementById('pathZS').value)">
+                                    Скопировать
+                                </button>
+                            @endif
+                        </td>
+                        <td class="text-center">
+                            @if($loan->pathPD)
+                                <button id="pathPD" value="{{$loan->pathPD}}" class="btn-outline-primary"
+                                        onclick="copyPathToBuffer(document.getElementById('pathPD').value)">
+                                    Скопировать
+                                </button>
+                            @endif
+                        </td>
+                        <td class="text-center">
+                            @if($loan->pathIAB)
+                                <button id="pathIAB" value="{{$loan->pathIAB}}" class="btn-outline-primary"
+                                        onclick="copyPathToBuffer(document.getElementById('pathIAB').value)">
+                                    Скопировать
+                                </button>
+                            @endif
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -211,3 +238,4 @@
     </div>
 </div>
 @endsection
+<script type="text/javascript" src="{{ asset("/js/myJS.js") }}"></script>

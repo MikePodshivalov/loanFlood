@@ -165,5 +165,4 @@ class Loan extends Model
             ->orWhere('executors.km', '=', $name)
             ->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
     }
-
 }

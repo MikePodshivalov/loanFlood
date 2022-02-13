@@ -32,6 +32,7 @@ class ExecutorController extends Controller
         $emails = Loan::getEmailsOfDepartments($loan);
         Event::dispatch(new LoanSendToDepartments($loan, $emails));
         Executor::setPublished($request->loan_id);
+        Executor::setTimeOfStart($request->loan_id);
         return redirect()->back();
     }
 }
