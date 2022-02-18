@@ -62,7 +62,7 @@ class LoanController extends Controller
      */
     public function show(Loan $loan)
     {
-        $loan->load(['statuses', 'executors', 'difficulties']);
+        $loan->load(['statuses', 'executors', 'difficulties', 'operations']);
         return view('loans.show', compact('loan'));
     }
 

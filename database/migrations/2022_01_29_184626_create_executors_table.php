@@ -30,7 +30,7 @@ class CreateExecutorsTable extends Migration
             $table->string('km', 20)->nullable();
             $table->date('km_start')->nullable();
             $table->date('km_end')->nullable();
-            $table->boolean('notify_ukk_main')->nullable();
+            $table->boolean('notify_km_main')->nullable();
             $table->boolean('published')->nullable();
         });
     }

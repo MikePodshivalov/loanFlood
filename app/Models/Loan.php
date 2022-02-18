@@ -105,6 +105,11 @@ class Loan extends Model
         return $this->hasOne(Status::class);
     }
 
+    public function operations()
+    {
+        return $this->hasMany(Operation::class);
+    }
+
     public static function loansOfDepartment()
     {
         if(Auth::user()->hasAnyRole(['admin', 'km_main'])) {

@@ -91,7 +91,7 @@
                     <tr>
                         <td class="text-center">
                             @if($loan->pathUKK)
-                                <button id="pathUKK" value="{{$loan->pathUKK}}" class="btn-outline-primary"
+                                <button style="font-size: x-small" id="pathUKK" value="{{$loan->pathUKK}}" class="btn-outline-primary"
                                         onclick="copyPathToBuffer(document.getElementById('pathUKK').value)">
                                     Скопировать
                                 </button>
@@ -99,7 +99,7 @@
                         </td>
                         <td class="text-center">
                             @if($loan->pathZS)
-                                <button id="pathZS" value="{{$loan->pathZS}}" class="btn-outline-primary"
+                                <button style="font-size: x-small" id="pathZS" value="{{$loan->pathZS}}" class="btn-outline-primary"
                                         onclick="copyPathToBuffer(document.getElementById('pathZS').value)">
                                     Скопировать
                                 </button>
@@ -107,7 +107,7 @@
                         </td>
                         <td class="text-center">
                             @if($loan->pathPD)
-                                <button id="pathPD" value="{{$loan->pathPD}}" class="btn-outline-primary"
+                                <button style="font-size: x-small" id="pathPD" value="{{$loan->pathPD}}" class="btn-outline-primary"
                                         onclick="copyPathToBuffer(document.getElementById('pathPD').value)">
                                     Скопировать
                                 </button>
@@ -115,7 +115,7 @@
                         </td>
                         <td class="text-center">
                             @if($loan->pathIAB)
-                                <button id="pathIAB" value="{{$loan->pathIAB}}" class="btn-outline-primary"
+                                <button style="font-size: x-small" id="pathIAB" value="{{$loan->pathIAB}}" class="btn-outline-primary"
                                         onclick="copyPathToBuffer(document.getElementById('pathIAB').value)">
                                     Скопировать
                                 </button>
@@ -154,6 +154,7 @@
                         @else
                             {{ $loan->executors->km ?? '' }}
                         @endif
+                            <br>{{$loan->executors->km_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->km_start) : ''}}
                     </td>
                     <td class="text-center">
                         @if(Auth::user()->hasRole('ukk_main'))
@@ -172,6 +173,7 @@
                         @else
                             {{ $loan->executors->ukk ?? '' }}
                         @endif
+                            <br>{{$loan->executors->ukk_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->ukk_start) : ''}}
                     </td>
                     <td class="text-center">
                         @if(Auth::user()->hasRole('zs_main'))
@@ -190,6 +192,7 @@
                         @else
                             {{ $loan->executors->zs ?? '' }}
                         @endif
+                            <br>{{$loan->executors->zs_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->zs_start) : ''}}
                     </td>
                     <td class="text-center">
                         @if(Auth::user()->hasRole('pd_main'))
@@ -208,6 +211,7 @@
                         @else
                             {{ $loan->executors->pd ?? '' }}
                         @endif
+                            <br>{{$loan->executors->pd_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->pd_start) : ''}}
                     </td>
                     <td class="text-center">
                         @if(Auth::user()->hasRole('iab_main'))
@@ -226,6 +230,24 @@
                         @else
                             {{ $loan->executors->iab ?? '' }}
                         @endif
+                            <br>{{$loan->executors->iab_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->iab_start) : ''}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-left">
+                        @include('operations.index', ['column' => 'km'])
+                    </td>
+                    <td class="text-left">
+                        @include('operations.index', ['column' => 'ukk'])
+                    </td>
+                    <td class="text-left">
+                        @include('operations.index', ['column' => 'zs'])
+                    </td>
+                    <td class="text-left">
+                        @include('operations.index', ['column' => 'pd'])
+                    </td>
+                    <td class="text-left">
+                        @include('operations.index', ['column' => 'iab'])
                     </td>
                 </tr>
                 </tbody>

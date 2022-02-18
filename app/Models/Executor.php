@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
  * @property int|null $zs
  * @property int|null $iab
  * @property int|null $km
- * @property int|null $notify_ukk_main
+ * @property int|null $notify_km_main
  * @property int|null $published
  * @property-read \App\Models\Loan $loans
  * @method static \Illuminate\Database\Eloquent\Builder|Executor newModelQuery()
@@ -48,14 +48,14 @@ class Executor extends Model
         if(Auth::user()->hasAnyRole('km', 'km_main')) {
             self::create([
                 'loan_id' => $loan->id,
-                'notify_ukk_main' => 1,
+                'notify_km_main' => 1,
                 'km' => $loan->creator,
                 'km_start' => Carbon::now(),
             ]);
         } else {
             self::create([
                 'loan_id' => $loan->id,
-                'notify_ukk_main' => 1,
+                'notify_km_main' => 1,
             ]);
         }
     }

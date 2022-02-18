@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
         ],
         [
             'name' => 'Михаил Подшивалов',
-            'email' => 'mapodshivalov@gmail.comm',
+            'email' => 'mapodshivalov@gmail.com',
             'role' => 'ukk'
         ],
         [
