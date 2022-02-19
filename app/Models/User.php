@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use phpDocumentor\Reflection\Types\Integer;
@@ -91,5 +92,19 @@ class User extends Authenticatable implements MustVerifyEmail
           'pd' => User::role('pd')->pluck('name')->toArray(),
         ];
         return $listOfUserRole;
+    }
+
+    public static function getExecutorRole()
+    {
+        if(Auth::user()->hasRole('zs')) {
+            return 'ZS';
+        } elseif (Auth::user()->hasRole('pd')) {
+            return 'PD';
+        } elseif (Auth::user()->hasRole('iab')) {
+            return 'IAB';
+        } elseif (Auth::user()->hasRole('ukk')) {
+            return 'UKK';
+        }
+        return false;
     }
 }

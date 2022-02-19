@@ -26,3 +26,7 @@
 .longPathTd {
     word-wrap:break-word;
 }
+
+.operations {
+    display: inline-block;
+}

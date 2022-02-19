@@ -30,6 +30,9 @@ Route::group(['middleware' => ['verified']], function () {
     Route::get('/searchINN', [DadataController::class, 'index'])->name('searchINN');
     Route::post('/searchINN', [DadataController::class, 'index'])->name('searchINN.index');
     Route::get('/searchINN/found', [DadataController::class, 'show'])->name('searchINN.show');
+    Route::post('/loans/conclusion', [LoanController::class, 'conclusion'])->name('loans.conclusion');
+    Route::post('/loans/ksov', [LoanController::class, 'ksov'])->name('loans.ksov');
+    Route::post('/loans/kk', [LoanController::class, 'kk'])->name('loans.kk');
 });
 
 Route::group(['middleware' => ['auth']], function () {
@@ -47,11 +50,14 @@ Route::group(['middleware' => ['role:km_main|admin']], function () {
 
 Route::group(['middleware' => ['role:ukk|km|iab|pd|zs']], function () {
     Route::get('/home', [LoanController::class, 'homeIndex'])->name('loans.homeIndex');
-    Route::post('/home', [LoanController::class, 'homeIndex'])->name('loans.homeIndex');
+//    Route::post('/home', [LoanController::class, 'homeIndex'])->name('loans.homeIndex');
     Route::post('/operation', [OperationController::class, 'storeDefaultOperationsUKK'])->name('operations.storeDefaultOperationsUKK');
     Route::post('/operation/store', [OperationController::class, 'store'])->name('operations.store');
     Route::post('/operation/done', [OperationController::class, 'done'])->name('operations.done');
+
 });
+
+Route::delete('/operation/destroy', [OperationController::class, 'destroy'])->name('operations.destroy');
 
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
 

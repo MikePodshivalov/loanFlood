@@ -7,7 +7,7 @@
 @foreach($loan->operations as $operation)
     @if($operation->department == $column)
         <li style="font-size: small; list-style-type: none;">
-            <form action="{{route('operations.done')}}" id="operation-{{$operation->id}}" method="post">
+            <form class="operations" action="{{route('operations.done')}}" id="operation-{{$operation->id}}" method="post">
                 @csrf
                 <input type="text" name="id" value="{{$operation->id}}" hidden>
                 <input type="text" name="done" value="{{$operation->done}}" hidden>
@@ -20,12 +20,22 @@
                         onclick="document.getElementById('operation-{{$operation->id}}').submit();
                    @endif
                        ">
-                    {{Str::limit($operation->name, 20)}}
+                    {{Str::limit($operation->name, 17)}}
                 </a>
                 @if($operation->done)
                     <a href="#" style="font-size: x-small;">{{\App\Services\Helper::ReverseDate($operation->done_time)}}</a>
                 @endif
             </form>
+            @if(\Illuminate\Support\Facades\Auth::user()->hasAnyRole($column . '_main', 'admin'))
+                <form class="operations" action="{{route('operations.destroy')}}" method="post" id="operation-delete-{{$operation->id}}">
+                    @csrf
+                    @method('DELETE')
+                    <a style="font-size: xx-small;" href="#" onclick="document.getElementById('operation-delete-{{$operation->id}}').submit();">
+                        <input type="hidden" name="operation_id" value="{{$operation->id}}">
+                        <i class="far fa-window-close"></i>
+                    </a>
+                </form>
+            @endif
         </li>
     @endif
 @endforeach

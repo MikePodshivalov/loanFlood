@@ -46,4 +46,13 @@ class OperationController extends Controller
         }
         return redirect()->back();
     }
+
+    public function destroy(Request $request)
+    {
+        if(isset($request['operation_id']) && !empty($request['operation_id'])) {
+            $id = $request['operation_id'];
+            Operation::query()->find($id)->Delete();
+        }
+        return redirect()->back();
+    }
 }

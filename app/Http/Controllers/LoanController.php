@@ -11,6 +11,7 @@ use App\Models\Loan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class LoanController extends Controller
 {
@@ -135,4 +136,33 @@ class LoanController extends Controller
         return view('loans.index', compact('loans'));
     }
 
+    public function conclusion(Request $request)
+    {
+        $role = User::getExecutorRole();
+        if($role) {
+            $loan = Loan::find($request->loan_id)->update([
+                'conclusion' . $role => $request->conclusion,
+            ]);
+            Executor::where('loan_id', $request->loan_id)->update([
+                Str::lower($role) . '_end' => now(),
+            ]);
+        }
+        return redirect()->back();
+    }
+
+    public function ksov(Request $request)
+    {
+        $loan = Loan::find($request->loan_id)->update([
+            'KSOV' => $request->conclusion,
+        ]);
+        return redirect()->back();
+    }
+
+    public function kk(Request $request)
+    {
+        $loan = Loan::find($request->loan_id)->update([
+            'KK' => $request->conclusion,
+        ]);
+        return redirect()->back();
+    }
 }

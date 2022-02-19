@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="{{ asset("css/my.css") }}">
+<link rel="stylesheet" id="css-main" href="{{ mix('css/dashmix.css') }}">
 @extends('layouts.backend')
 @section('content')
 <div class="content">
@@ -36,13 +37,13 @@
                     <th class="text-center" scope="col" style="width: 160px">Группа</th>
                     <th class="text-center" scope="col">Инициатор</th>
                     <th class="text-center" scope="col" style="width: 100px">Млн.руб.</th>
-                    <th class="text-center" scope="col">Кем создана</th>
-                    <th class="text-center" scope="col" style="width: 150px">Дата создания</th>
+{{--                    <th class="text-center" scope="col">Кем создана</th>--}}
+{{--                    <th class="text-center" scope="col" style="width: 150px">Дата создания</th>--}}
                     <th class="text-center" scope="col">Закл. ЗС</th>
                     <th class="text-center" scope="col">Закл. ПД</th>
                     <th class="text-center" scope="col">Закл. ИАБ</th>
-                    <th class="text-center" scope="col" style="width: 80px">КСОВ</th>
-                    <th class="text-center" scope="col" style="width: 80px">КК</th>
+                    <th class="text-center" scope="col">КСОВ</th>
+                    <th class="text-center" scope="col">КК</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -51,22 +52,47 @@
                     <td class="text-center">{{$loan->group}}</td>
                     <td class="text-center">{{$loan->initiator}}</td>
                     <td class="text-center">{{number_format($loan->amount, 0, ' ', ' ')}}</td>
-                    <td class="text-center">{{$loan->creator}}</td>
-                    <td class="text-center">{{date('d-m-Y', strtotime($loan->created_at))}}</td>
+{{--                    <td class="text-center">{{$loan->creator}}</td>--}}
+{{--                    <td class="text-center">{{date('d-m-Y', strtotime($loan->created_at))}}</td>--}}
                     <td class="text-center longPathTd">
-
+                        @if($loan->conclusionZS)
+                            <button style="font-size: x-small" id="conclusionZS" value="{{$loan->conclusionZS}}" class="btn-outline-primary"
+                                    onclick="copyPathToBuffer(document.getElementById('conclusionZS').value)">
+                                Скопировать
+                            </button>
+                        @endif
                     </td>
                     <td class="text-center longPathTd">
-
+                        @if($loan->conclusionPD)
+                            <button style="font-size: x-small" id="conclusionPD" value="{{$loan->conclusionPD}}" class="btn-outline-primary"
+                                    onclick="copyPathToBuffer(document.getElementById('conclusionPD').value)">
+                                Скопировать
+                            </button>
+                        @endif
                     </td>
                     <td class="text-center longPathTd">
-
+                        @if($loan->conclusionIAB)
+                            <button style="font-size: x-small" id="conclusionIAB" value="{{$loan->conclusionIAB}}" class="btn-outline-primary"
+                                    onclick="copyPathToBuffer(document.getElementById('conclusionIAB').value)">
+                                Скопировать
+                            </button>
+                        @endif
                     </td>
                     <td class="text-center longPathTd">
-
+                        @if($loan->KSOV)
+                            <button style="font-size: x-small" id="KSOV" value="{{$loan->KSOV}}" class="btn-outline-primary"
+                                    onclick="copyPathToBuffer(document.getElementById('KSOV').value)">
+                                Скопировать
+                            </button>
+                        @endif
                     </td>
                     <td class="text-center longPathTd">
-
+                        @if($loan->KK)
+                            <button style="font-size: x-small" id="KK" value="{{$loan->KK}}" class="btn-outline-primary"
+                                    onclick="copyPathToBuffer(document.getElementById('KK').value)">
+                                Скопировать
+                            </button>
+                        @endif
                     </td>
                 </tr>
                 </tbody>
@@ -152,9 +178,10 @@
                                 <input type="text" name="id" value="{{$loan->id}}" hidden>
                             </form>
                         @else
-                            {{ $loan->executors->km ?? '' }}
+                            {{ $loan->executors->km ?? '' }}<br>
                         @endif
-                            <br>{{$loan->executors->km_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->km_start) : ''}}
+                            {{$loan->executors->km_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->km_start) : ''}}
+                            {{$loan->executors->km_end !== null ? \App\Services\Helper::ReverseDate($loan->executors->km_end) : ''}}
                     </td>
                     <td class="text-center">
                         @if(Auth::user()->hasRole('ukk_main'))
@@ -171,9 +198,10 @@
                                 <input type="text" name="id" value="{{$loan->id}}" hidden>
                             </form>
                         @else
-                            {{ $loan->executors->ukk ?? '' }}
+                            {{ $loan->executors->ukk ?? '' }}<br>
                         @endif
-                            <br>{{$loan->executors->ukk_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->ukk_start) : ''}}
+                            {{$loan->executors->ukk_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->ukk_start) : ''}}
+                            {{$loan->executors->ukk_end !== null ? \App\Services\Helper::ReverseDate($loan->executors->ukk_end) : ''}}
                     </td>
                     <td class="text-center">
                         @if(Auth::user()->hasRole('zs_main'))
@@ -190,9 +218,10 @@
                                 <input type="text" name="id" value="{{$loan->id}}" hidden>
                             </form>
                         @else
-                            {{ $loan->executors->zs ?? '' }}
+                            {{ $loan->executors->zs ?? '' }}<br>
                         @endif
-                            <br>{{$loan->executors->zs_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->zs_start) : ''}}
+                            {{$loan->executors->zs_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->zs_start) : ''}}
+                            {{$loan->executors->zs_end !== null ? \App\Services\Helper::ReverseDate($loan->executors->zs_end) : ''}}
                     </td>
                     <td class="text-center">
                         @if(Auth::user()->hasRole('pd_main'))
@@ -209,9 +238,10 @@
                                 <input type="text" name="id" value="{{$loan->id}}" hidden>
                             </form>
                         @else
-                            {{ $loan->executors->pd ?? '' }}
+                            {{ $loan->executors->pd ?? '' }}<br>
                         @endif
-                            <br>{{$loan->executors->pd_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->pd_start) : ''}}
+                            {{$loan->executors->pd_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->pd_start) : ''}}
+                            {{$loan->executors->pd_end !== null ? \App\Services\Helper::ReverseDate($loan->executors->pd_end) : ''}}
                     </td>
                     <td class="text-center">
                         @if(Auth::user()->hasRole('iab_main'))
@@ -228,9 +258,11 @@
                                 <input type="text" name="id" value="{{$loan->id}}" hidden>
                             </form>
                         @else
-                            {{ $loan->executors->iab ?? '' }}
+                            {{ $loan->executors->iab ?? '' }}<br>
                         @endif
-                            <br>{{$loan->executors->iab_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->iab_start) : ''}}
+                            {{$loan->executors->iab_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->iab_start) : ''}}
+                            {{$loan->executors->iab_end !== null ? \App\Services\Helper::ReverseDate($loan->executors->iab_end) : ''}}
+
                     </td>
                 </tr>
                 <tr>
@@ -254,6 +286,15 @@
             </table>
             @if(is_null($loan->executors->published) && Auth::user()->hasRole('km_main'))
                 @include('layouts.loan.buttonSendLoan')
+            @endif
+            @if(($executorRole === 'IAB' && !$loan->executors->iab_end) || ($executorRole === 'ZS' && !$loan->executors->zs_end) || ($executorRole === 'PD' && !$loan->executors->pd_end))
+                @include('conclusions.conclusions')
+            @endif
+            @if($executorRole === 'UKK' && !$loan->KSOV && !$loan->KK)
+                @include('conclusions.KSOV')
+            @endif
+            @if($executorRole === 'UKK' && !$loan->KK)
+                @include('conclusions.KK')
             @endif
             <a href="{{ URL::previous() }}"> Назад </a>
         </div>
