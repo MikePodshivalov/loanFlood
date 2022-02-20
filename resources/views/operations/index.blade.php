@@ -16,6 +16,9 @@
                     text-decoration: line-through;"
                 @endif
                    href="#"
+                   @if(Str::length($operation->name) > 17)
+                        class="a-tooltip" title="{{$operation->name}}"
+                   @endif
                    @if(\Illuminate\Support\Facades\Auth::user()->hasRole($column))
                         onclick="document.getElementById('operation-{{$operation->id}}').submit();
                    @endif
