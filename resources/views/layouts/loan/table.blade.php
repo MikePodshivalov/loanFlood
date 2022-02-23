@@ -22,6 +22,9 @@
                     <th style="width: 10%;" class="text-center">
                         Дата создания
                     </th>
+                    <th style="width: 17%;" class="text-center">
+                        Статус
+                    </th>
                     <th style="width: 10%;" class="text-center">
                         Действия
                     </th>
@@ -48,6 +51,9 @@
                             </td>
                             <td class="text-center">
                                 {{date('d-m-Y', strtotime($loan->created_at))}}
+                            </td>
+                            <td class="text-center small">
+                                {{$loan->statuses->simple_status}}
                             </td>
                             <td class="text-center">
                                 <form action="{{route('loans.destroy', $loan)}}" method="post" id="form-id-{{$loan->id}}">

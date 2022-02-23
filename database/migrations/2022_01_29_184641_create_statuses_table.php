@@ -15,7 +15,7 @@ class CreateStatusesTable extends Migration
     {
         Schema::create('statuses', function (Blueprint $table) {
             $table->foreignID('loan_id')->constrained();
-            $table->string('simple_status',20)->default('сбор документов');
+            $table->string('simple_status',20)->default('Сбор документов');
             $table->string('special_status', 20)->nullable();
         });
     }

@@ -23,9 +23,20 @@ use Illuminate\Database\Eloquent\Model;
 class Status extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+    public $timestamps = false;
 
     public function loans()
     {
         return $this->belongsTo(Loan::class);
+    }
+
+    public static function setSpecialAndSimpleStatus($id)
+    {
+        self::create([
+            'loan_id' => $id,
+            'special_status' => config('specialstatus')[0],
+            'simple_status' => config('simplestatus')[0],
+        ]);
     }
 }

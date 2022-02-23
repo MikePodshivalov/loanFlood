@@ -110,9 +110,9 @@ class Loan extends Model
         return $this->hasMany(Operation::class);
     }
 
-    public static function loansOfDepartment()
+    public static function loansOfDepartment($userRoles)
     {
-        if(Auth::user()->hasAnyRole(['admin', 'km_main'])) {
+        if(Auth::user()->hasAnyRole(['admin', 'km_main', 'observer'])) {
             return self::latest()->whereNull('deleted_at')->with('tags')
                 ->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
         } elseif (Auth::user()->hasRole(['zs_main'])) {

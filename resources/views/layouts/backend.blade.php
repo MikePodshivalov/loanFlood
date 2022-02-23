@@ -131,9 +131,9 @@
 
           <!-- Notifications Dropdown -->
           <div class="dropdown d-inline-block">
-            <button type="button" class="btn btn-alt-secondary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-fw fa-bell"></i>
-            </button>
+{{--            <button type="button" class="btn btn-alt-secondary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--              <i class="fa fa-fw fa-bell"></i>--}}
+{{--            </button>--}}
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
               <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">
                 Notifications
@@ -208,9 +208,9 @@
 
           <!-- Toggle Side Overlay -->
           <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-          <button type="button" class="btn btn-alt-secondary" data-toggle="layout" data-action="side_overlay_toggle">
-            <i class="far fa-fw fa-list-alt"></i>
-          </button>
+{{--          <button type="button" class="btn btn-alt-secondary" data-toggle="layout" data-action="side_overlay_toggle">--}}
+{{--            <i class="far fa-fw fa-list-alt"></i>--}}
+{{--          </button>--}}
           <!-- END Toggle Side Overlay -->
         </div>
         <!-- END Right Section -->

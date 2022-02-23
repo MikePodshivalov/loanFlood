@@ -52,10 +52,12 @@ class Executor extends Model
                 'km' => $loan->creator,
                 'km_start' => Carbon::now(),
             ]);
-        } else {
+        } elseif(Auth::user()->hasRole('ukk_main')) {
             self::create([
                 'loan_id' => $loan->id,
                 'notify_km_main' => 1,
+                'ukk' => $loan->creator,
+                'ukk_start' => Carbon::now(),
             ]);
         }
     }

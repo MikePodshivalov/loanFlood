@@ -6,6 +6,7 @@ use App\Http\Controllers\ExecutorController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\OperationController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
@@ -33,6 +34,7 @@ Route::group(['middleware' => ['verified']], function () {
     Route::post('/loans/conclusion', [LoanController::class, 'conclusion'])->name('loans.conclusion');
     Route::post('/loans/ksov', [LoanController::class, 'ksov'])->name('loans.ksov');
     Route::post('/loans/kk', [LoanController::class, 'kk'])->name('loans.kk');
+    Route::post('/loans/conclusion', [LoanController::class, 'conclusion'])->name('loans.conclusion');
 });
 
 Route::group(['middleware' => ['auth']], function () {
@@ -54,7 +56,6 @@ Route::group(['middleware' => ['role:ukk|km|iab|pd|zs']], function () {
     Route::post('/operation', [OperationController::class, 'storeDefaultOperationsUKK'])->name('operations.storeDefaultOperationsUKK');
     Route::post('/operation/store', [OperationController::class, 'store'])->name('operations.store');
     Route::post('/operation/done', [OperationController::class, 'done'])->name('operations.done');
-
 });
 
 Route::delete('/operation/destroy', [OperationController::class, 'destroy'])->name('operations.destroy');
@@ -63,6 +64,10 @@ Route::post('/register', [RegisteredUserController::class, 'store'])->name('regi
 
 Route::group(['middleware' => ['role:ukk_main|admin']], function () {
     Route::post('/difficulty', [DifficultyController::class, 'update'])->name('difficulty.update');
+});
+
+Route::group(['middleware' => ['role:ukk_main|km_main']], function () {
+    Route::post('/status', [StatusController::class, 'update'])->name('status.update');
 });
 
 //https://demo.pixelcave.com/dashmix/be_layout_content_main_full_width.html

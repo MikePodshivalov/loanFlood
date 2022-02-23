@@ -7,15 +7,14 @@
         <div class="block-content block-content-full">
 
             <div class="row">
-                <div class="col-sm-6">
-                    <h3 class="mb-0 display-7"><b>{{$loan->name}} ({{$loan->type}})</b></h3>
+                <div class="col-sm-4">
+                    <h4 class="mb-0 display-9"><b>{{$loan->name}} ({{$loan->type}})</b></h4>
                 </div>
                 @if(Auth::user()->hasRole('ukk_main'))
-                    <div class="col">
 
-                        <form class="form-inline" action="{{route('difficulty.update')}}" method="post">
+                        <form class="form-inline col-sm-3" action="{{route('difficulty.update')}}" method="post">
                             @csrf
-                            <div class="col-sm-2">
+                            <div class="col-sm-4">
                                 <select class="form-select" id="difficulty" name="difficulty" onchange="this.form.submit()">
                                     @for($i = 1; $i <= 5; $i++)
                                         <option class="text-center" value="{{$i}}" {{$loan->difficulties->difficulty == $i ? "selected" : ""}}>{{$i}}</option>
@@ -24,9 +23,22 @@
                             </div>
                             <input type="text" name="id" value="{{$loan->id}}" hidden>
                         </form>
-                    </div>
-
                 @endif
+
+                @if(Auth::user()->hasAnyRole('ukk_main', 'km_main'))
+                    <div class="col-4">
+                        <form class="form-inline col-5" action="{{route('status.update')}}" method="post">
+                            @csrf
+                            <select class="form-select" id="special_status" name="special_status" onchange="this.form.submit()">
+                                    @foreach(config('specialstatus') as $status)
+                                        <option value="{{$status}}" {{$loan->statuses->special_status == $status ? "selected" : ""}}>{{$status}}</option>
+                                    @endforeach
+                                </select>
+                            <input type="text" name="id" value="{{$loan->id}}" hidden>
+                        </form>
+                    </div>
+                @endif
+
             </div>
 
             @include('loans.tags', ['tags' => $loan->tags])
@@ -180,8 +192,10 @@
                         @else
                             {{ $loan->executors->km ?? '' }}<br>
                         @endif
+                        <span style="font-size: small">
                             {{$loan->executors->km_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->km_start) : ''}}
-                            {{$loan->executors->km_end !== null ? \App\Services\Helper::ReverseDate($loan->executors->km_end) : ''}}
+                            {{$loan->executors->km_end !== null ? '-' . \App\Services\Helper::ReverseDate($loan->executors->km_end) : ''}}
+                        </span>
                     </td>
                     <td class="text-center">
                         @if(Auth::user()->hasRole('ukk_main'))
@@ -200,8 +214,10 @@
                         @else
                             {{ $loan->executors->ukk ?? '' }}<br>
                         @endif
+                        <span style="font-size: small">
                             {{$loan->executors->ukk_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->ukk_start) : ''}}
-                            {{$loan->executors->ukk_end !== null ? \App\Services\Helper::ReverseDate($loan->executors->ukk_end) : ''}}
+                            {{$loan->executors->ukk_end !== null ? '-' . \App\Services\Helper::ReverseDate($loan->executors->ukk_end) : ''}}
+                        </span>
                     </td>
                     <td class="text-center">
                         @if(Auth::user()->hasRole('zs_main'))
@@ -220,8 +236,10 @@
                         @else
                             {{ $loan->executors->zs ?? '' }}<br>
                         @endif
+                        <span style="font-size: small">
                             {{$loan->executors->zs_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->zs_start) : ''}}
-                            {{$loan->executors->zs_end !== null ? \App\Services\Helper::ReverseDate($loan->executors->zs_end) : ''}}
+                            {{$loan->executors->zs_end !== null ? '-' . \App\Services\Helper::ReverseDate($loan->executors->zs_end) : ''}}
+                        </span>
                     </td>
                     <td class="text-center">
                         @if(Auth::user()->hasRole('pd_main'))
@@ -240,8 +258,10 @@
                         @else
                             {{ $loan->executors->pd ?? '' }}<br>
                         @endif
+                        <span style="font-size: small">
                             {{$loan->executors->pd_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->pd_start) : ''}}
-                            {{$loan->executors->pd_end !== null ? \App\Services\Helper::ReverseDate($loan->executors->pd_end) : ''}}
+                            {{$loan->executors->pd_end !== null ? '-' . \App\Services\Helper::ReverseDate($loan->executors->pd_end) : ''}}
+                        </span>
                     </td>
                     <td class="text-center">
                         @if(Auth::user()->hasRole('iab_main'))
@@ -260,8 +280,10 @@
                         @else
                             {{ $loan->executors->iab ?? '' }}<br>
                         @endif
+                        <span style="font-size: small">
                             {{$loan->executors->iab_start !== null ? \App\Services\Helper::ReverseDate($loan->executors->iab_start) : ''}}
-                            {{$loan->executors->iab_end !== null ? \App\Services\Helper::ReverseDate($loan->executors->iab_end) : ''}}
+                            {{$loan->executors->iab_end !== null ? '-' . \App\Services\Helper::ReverseDate($loan->executors->iab_end) : ''}}
+                        </span>
 
                     </td>
                 </tr>

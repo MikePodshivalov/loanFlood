@@ -13,7 +13,7 @@
                 <input type="text" name="done" value="{{$operation->done}}" hidden>
                 <a style="font-size: x-small;
                 @if($operation->done)
-                    text-decoration: line-through;"
+                    text-decoration: line-through; text-decoration-color: red;"
                 @endif
                    href="#"
                    @if(Str::length($operation->name) > 17)
@@ -23,7 +23,9 @@
                         onclick="document.getElementById('operation-{{$operation->id}}').submit();
                    @endif
                        ">
-                    {{Str::limit($operation->name, 17)}}
+                    <span style="color: black;">
+                        {{Str::limit($operation->name, 16)}}
+                    </span>
                 </a>
                 @if($operation->done)
                     <a href="#" style="font-size: x-small;">{{\App\Services\Helper::ReverseDate($operation->done_time)}}</a>

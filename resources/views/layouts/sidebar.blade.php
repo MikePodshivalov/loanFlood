@@ -53,20 +53,20 @@
                         </a>
                     </li>
                 @endif
-                @if(Auth::user()->hasAnyRole('admin'))
+                @if(Auth::user()->hasAnyRole('admin', 'observer'))
                     <li class="nav-main-item">
                         <a class="nav-main-link{{str_contains(Route::currentRouteName(), 'loans') ? ' active' : '' }}" href="{{route('loans.index')}}">
                             <span class="nav-main-link-name">Все задачи</span>
                             {{--                        <span class="nav-main-link-badge badge rounded-pill bg-primary">5</span>--}}
                         </a>
                     </li>
+                @endif
+                @if(Auth::user()->hasAnyRole('admin'))
                     <li class="nav-main-item">
                         <a class="nav-main-link{{Route::currentRouteName() === 'deleted' ? ' active' : '' }}" href="{{route('deleted')}}">
                             <span class="nav-main-link-name">Удаленные задачи</span>
                         </a>
                     </li>
-                @endif
-                @if(Auth::user()->hasRole('admin'))
                     <li class="nav-main-item">
                         <a class="nav-main-link{{str_contains(Route::currentRouteName(), 'roles') ? ' active' : '' }}" href="{{route('roles.index')}}">
                             <span class="nav-main-link-name">Выдача/удаление ролей</span>

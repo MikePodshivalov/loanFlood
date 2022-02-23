@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateLoanRequest;
 use App\Models\Difficulty;
 use App\Models\Executor;
 use App\Models\Loan;
+use App\Models\Status;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,9 +21,10 @@ class LoanController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index(Request $request)
+    public function index()
     {
-        $loans = Loan::loansOfDepartment();
+        $userRoles = Auth::user()->roles->pluck('name')->toArray();
+        $loans = Loan::loansOfDepartment($userRoles);
         return view('loans.index', compact('loans'));
     }
 
@@ -48,6 +50,7 @@ class LoanController extends Controller
         $loan = Loan::create($validated);
         Executor::noteAboutTheNotificationToKM($loan);
         Difficulty::setDifficultyToOne($loan->id);
+        Status::setSpecialAndSimpleStatus($loan->id);
         if (!is_null($request['tags'])) {
             $tags = $request->getTagsFromRequest();
             $tagsSynchronizer->sync($tags, $loan);

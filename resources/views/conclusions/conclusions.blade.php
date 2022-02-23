@@ -1,4 +1,4 @@
-<form action="{{route('loans.ksov')}}" method="post">
+<form action="{{route('loans.conclusion')}}" method="post">
     @csrf
     <input type="text" hidden name='loan_id' value="{{$loan->id}}">
     <input type="text" value="" name="conclusion" placeholder="Введите путь">

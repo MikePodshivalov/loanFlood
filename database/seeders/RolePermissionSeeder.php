@@ -28,6 +28,7 @@ class RolePermissionSeeder extends Seeder
         Role::create(['name' => 'zs']);
         Role::create(['name' => 'ukam_main']);
         Role::create(['name' => 'ukam']);
+        Role::create(['name' => 'observer']);
         Permission::create(['name' => 'create loan']);
         Permission::create(['name' => 'edit loan']);
     }
