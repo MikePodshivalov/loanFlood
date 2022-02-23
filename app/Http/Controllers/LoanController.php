@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Synchronizable;
+use App\Filters\LoanFilter;
 use App\Http\Requests\StoreLoanRequest;
 use App\Http\Requests\UpdateLoanRequest;
 use App\Models\Difficulty;
@@ -21,10 +22,10 @@ class LoanController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(LoanFilter $filter)
     {
         $userRoles = Auth::user()->roles->pluck('name')->toArray();
-        $loans = Loan::loansOfDepartment($userRoles);
+        $loans = Loan::loansOfDepartment($filter, $userRoles);
         return view('loans.index', compact('loans'));
     }
 
@@ -133,9 +134,9 @@ class LoanController extends Controller
         return redirect ('deleted');
     }
 
-    public function homeIndex(Request $request)
+    public function homeIndex(Request $request, LoanFilter $filter)
     {
-        $loans = Loan::loansOfExecutor($request->user()->name);
+        $loans = Loan::loansOfExecutor($filter, $request->user()->name);
         return view('loans.index', compact('loans'));
     }
 
@@ -155,17 +156,23 @@ class LoanController extends Controller
 
     public function ksov(Request $request)
     {
-        $loan = Loan::find($request->loan_id)->update([
+        $loan = Loan::find($request->input('loan_id'))->update([
             'KSOV' => $request->conclusion,
         ]);
+        $statusUpdate = Status::where('loan_id', $request->input('loan_id'))->update(
+            ['simple_status' => config('simplestatus')[2]],
+        );
         return redirect()->back();
     }
 
     public function kk(Request $request)
     {
-        $loan = Loan::find($request->loan_id)->update([
+        $loan = Loan::find($request->input('loan_id'))->update([
             'KK' => $request->conclusion,
         ]);
+        $statusUpdate = Status::where('loan_id', $request->input('loan_id'))->update(
+            ['simple_status' => config('simplestatus')[3]],
+        );
         return redirect()->back();
     }
 }

@@ -19,3 +19,5 @@ async function copyPathToBuffer(path) {
 }
 
 $('.a-tooltip').tooltip();
+
+

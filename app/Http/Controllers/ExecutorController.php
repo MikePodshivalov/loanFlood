@@ -6,6 +6,7 @@ use App\Events\LoanSendToDepartments;
 use App\Listeners\SendLoanCreatedNotificationToExecutors;
 use App\Models\Executor;
 use App\Models\Loan;
+use App\Models\Status;
 use App\Models\User;
 use DragonCode\Support\Facades\Helpers\Arr;
 use Illuminate\Http\Request;
@@ -28,11 +29,14 @@ class ExecutorController extends Controller
 
     public function sendLoanToDepartments(Request $request)
     {
-        $loan = Loan::where('id', $request->loan_id)->first();
+        $loan = Loan::where('id', $request->input('loan_id'))->first();
         $emails = Loan::getEmailsOfDepartments($loan);
         Event::dispatch(new LoanSendToDepartments($loan, $emails));
         Executor::setPublished($request->loan_id);
         Executor::setTimeOfStart($request->loan_id);
+        $statusUpdate = Status::where('loan_id', $request->input('loan_id'))->update(
+            ['simple_status' => config('simplestatus')[1]],
+        );
         return redirect()->back();
     }
 }

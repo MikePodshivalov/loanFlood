@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Events\LoanCreated;
+use App\Filters\LoanFilter;
+use App\Filters\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -110,31 +113,31 @@ class Loan extends Model
         return $this->hasMany(Operation::class);
     }
 
-    public static function loansOfDepartment($userRoles)
+    public static function loansOfDepartment(LoanFilter $filter, $roles)
     {
-        if(Auth::user()->hasAnyRole(['admin', 'km_main', 'observer'])) {
+        if(in_array('admin', $roles) || in_array('km_main', $roles) || in_array('observer', $roles)) {
             return self::latest()->whereNull('deleted_at')->with('tags')
-                ->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
-        } elseif (Auth::user()->hasRole(['zs_main'])) {
+                ->filter($filter)->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
+        } elseif (in_array('zs_main', $roles)) {
             return self::latest()->whereNull('deleted_at')->with('tags')
                 ->join('executors', 'loans.id', '=', 'executors.loan_id')
                 ->where('executors.zs', '<>', null)
-                ->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
-        } elseif (Auth::user()->hasRole(['pd_main'])) {
+                ->filter($filter)->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
+        } elseif (in_array('pd_main', $roles)) {
             return self::latest()->whereNull('deleted_at')->with('tags')
                 ->join('executors', 'loans.id', '=', 'executors.loan_id')
                 ->where('executors.pd', '<>', null)
-                ->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
-        } elseif (Auth::user()->hasRole(['ukk_main'])) {
+                ->filter($filter)->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
+        } elseif (in_array('ukk_main', $roles)) {
             return self::latest()->whereNull('deleted_at')->with('tags')
                 ->join('executors', 'loans.id', '=', 'executors.loan_id')
                 ->where('executors.ukk', '<>', null)
-                ->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
-        } elseif (Auth::user()->hasRole(['iab_main'])) {
+                ->filter($filter)->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
+        } elseif (in_array('iab_main', $roles)) {
             return self::latest()->whereNull('deleted_at')->with('tags')
                 ->join('executors', 'loans.id', '=', 'executors.loan_id')
                 ->where('executors.iab', '<>', null)
-                ->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
+                ->filter($filter)->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
         }
         return false;
     }
@@ -159,9 +162,10 @@ class Loan extends Model
         return $emailsArray;
     }
 
-    public static function loansOfExecutor(string $name)
+    public static function loansOfExecutor(LoanFilter $filter, string $name)
     {
         return self::latest()->whereNull('deleted_at')->with('tags')
+            ->filter($filter)
             ->join('executors', 'loans.id', '=', 'executors.loan_id')
             ->where('executors.ukk', '=', $name)
             ->orWhere('executors.pd', '=', $name)
@@ -169,5 +173,10 @@ class Loan extends Model
             ->orWhere('executors.iab', '=', $name)
             ->orWhere('executors.km', '=', $name)
             ->paginate(25, ['id', 'name', 'initiator', 'type', 'amount', 'created_at', 'deleted_at']);
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filter)
+    {
+        return $filter->apply($builder);
     }
 }

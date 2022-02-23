@@ -40,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('listOfUserRole', User::listOfUserRole());
         });
 
-        view()->composer('loans.show', function ($view) {
+        view()->composer(['loans.show', 'loans.index', 'loans.homeIndex'], function ($view) {
             $view->with('executorRole', User::getExecutorRole());
         });
     }

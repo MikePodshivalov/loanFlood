@@ -1,6 +1,23 @@
+<link rel="stylesheet" href="{{ asset("js/myJS.js") }}">
 @extends('layouts.backend')
 @section('content')
     <div class="content content-full content-boxed">
+        <div class="row">
+            @if(Route::getFacadeRoot()->current()->uri() === 'loans')
+                <form id="filter_form" action="{{route('loans.index')}}" method="get">
+                    <div class="col-4 filter">
+                        <input name="search_name" @if(isset($_GET['search_name'])) value="{{$_GET['search_name']}}" @endif type="text" class="form-control" id="exampleFormControlInput" placeholder="Поиск задачи">
+                        <select name="type" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option value="">По типу</option>
+                            @foreach(config('loanproduct') as $type)
+                                <option value="{{$type}}" @if(isset($_GET['type'])) @if($_GET['type'] == $type) selected @endif @endif>{{$type}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-alt-info">Фильтр</button>
+                </form>
+            @endif
+        </div>
         <div class="content">
             @if(Auth::user()->hasPermissionTo('create loan') || Auth::user()->hasAnyRole('km', 'km_main'))
                 <div class="block-content block-content-full">

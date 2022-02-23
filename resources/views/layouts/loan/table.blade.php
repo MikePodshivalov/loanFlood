@@ -25,7 +25,7 @@
                     <th style="width: 17%;" class="text-center">
                         Статус
                     </th>
-                    <th style="width: 10%;" class="text-center">
+                    <th style="width: 12%;" valign="middle" class="text-center">
                         Действия
                     </th>
                 </tr>
@@ -80,7 +80,7 @@
         </div>
         <div class="dataTables_paginate paging_simple_numbers">
             <ul class="pagination">
-                {{ $loans->links('vendor.pagination.bootstrap-4') }}
+                {{ $loans->withQueryString()->links('vendor.pagination.bootstrap-4') }}
             </ul>
         </div>
     </div>

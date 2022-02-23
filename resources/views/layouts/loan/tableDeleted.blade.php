@@ -80,7 +80,7 @@
         </div>
         <div class="dataTables_paginate paging_simple_numbers">
             <ul class="pagination">
-                {{ $loans->links('vendor.pagination.bootstrap-4') }}
+                {{ $loans->withQueryString()->links('vendor.pagination.bootstrap-4') }}
             </ul>
         </div>
     </div>

@@ -30,3 +30,7 @@
 .operations {
     display: inline-block;
 }
+
+.filter {
+    display: flex;
+}
