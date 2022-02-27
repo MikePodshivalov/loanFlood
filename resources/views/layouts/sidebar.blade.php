@@ -94,10 +94,12 @@
                     </a>
                 </li>
             </ul>
-            <div class="mt-lg-8">
-                <span class="nav-main-link-name">Все теги: </span>
-                @include('loans.tags', ['tags' => $tagsCloud])
-            </div>
+            @if(Auth::user()->hasAnyRole('ukk_main', 'km_main'))
+                <div class="mt-lg-8">
+                    <span class="nav-main-link-name">Все теги: </span>
+                    @include('loans.tags', ['tags' => $tagsCloud])
+                </div>
+            @endif
         </div>
         <!-- END Side Navigation -->
     </div>

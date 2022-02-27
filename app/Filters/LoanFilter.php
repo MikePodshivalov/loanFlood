@@ -13,7 +13,8 @@ class LoanFilter extends QueryFilter
 
     public function search_name($search = '')
     {
-        return $this->builder->where('name', 'LIKE', '%' . $search . '%');
+        return $this->builder
+            ->where('name', 'LIKE', '%' . $search . '%');
     }
 
     public function amount($param)
@@ -26,9 +27,12 @@ class LoanFilter extends QueryFilter
 
     }
 
-    public function KSOV($param)
+    public function simple_status($status = null)
     {
-
+        return $this->builder->when($status, function ($query) use ($status) {
+            $query
+                ->join('statuses', 'id', '=', 'loan_id')
+                ->where('simple_status', $status);
+        });
     }
-
 }

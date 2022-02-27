@@ -25,9 +25,11 @@
                     <th style="width: 17%;" class="text-center">
                         Статус
                     </th>
-                    <th style="width: 12%;" valign="middle" class="text-center">
-                        Действия
-                    </th>
+                    @if(Auth::user()->hasPermissionTo('edit loan') || Auth::user()->hasAnyRole('km', 'km_main'))
+                        <th style="width: 15%;" class="text-center">
+                            Действия
+                        </th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -38,7 +40,9 @@
                                 {{$loan->id}}
                             </td>
                             <td>
-                                <b>{{$loan->name}}</b>
+                                <a href="{{ route('loans.show', $loan) }}">
+                                    <b>{{$loan->name}}</b>
+                                </a>
                             </td>
                             <td class="text-center">
                                 {{$loan->initiator}}
@@ -55,23 +59,26 @@
                             <td class="text-center small">
                                 {{$loan->statuses->simple_status}}
                             </td>
-                            <td class="text-center">
-                                <form action="{{route('loans.destroy', $loan)}}" method="post" id="form-id-{{$loan->id}}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <a data-tooltip="Подробнее" style="font-size: xx-small;" href="{{ route('loans.show', $loan) }}">
-                                        <i class="far fa-2x fa-eye"></i>
-                                    </a>
-                                    @if(Auth::user()->hasPermissionTo('edit loan') || Auth::user()->hasAnyRole('km', 'km_main'))
-                                        <a data-tooltip="Редактирование" style="font-size: xx-small;" href="{{ route('loans.edit', $loan) }}">
-                                            <i class="far fa-2x fa-edit"></i>
-                                        </a>
-                                        <a data-tooltip="Удаление" style="font-size: xx-small;" href="#" onclick="document.getElementById('form-id-{{$loan->id}}').submit();">
-                                            <i class="far fa-2x fa-window-close"></i>
-                                        </a>
-                                    @endif
-                                </form>
-                            </td>
+                            @if(Auth::user()->hasPermissionTo('edit loan') || Auth::user()->hasAnyRole('km', 'km_main'))
+                                <td class="text-center">
+                                    <div class="align-middle" style="height: 20px;">
+                                        <form action="{{route('loans.destroy', $loan)}}" method="post" id="form-id-{{$loan->id}}">
+                                            @csrf
+                                            @method('DELETE')
+    {{--                                        <a data-tooltip="Подробнее" style="font-size: x-small;" href="{{ route('loans.show', $loan) }}">--}}
+    {{--                                            <i class="far fa-2x fa-eye"></i>--}}
+    {{--                                        </a>--}}
+
+                                                <a data-tooltip="Редактирование" style="font-size: xx-small;" href="{{ route('loans.edit', $loan) }}">
+                                                    <i class="far fa-2x fa-edit"></i>
+                                                </a>
+                                                <a data-tooltip="Удаление" style="font-size: xx-small;" href="#" onclick="document.getElementById('form-id-{{$loan->id}}').submit();">
+                                                    <i class="far fa-2x fa-window-close"></i>
+                                                </a>
+                                        </form>
+                                    </div>
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 @endif
@@ -80,7 +87,9 @@
         </div>
         <div class="dataTables_paginate paging_simple_numbers">
             <ul class="pagination">
-                {{ $loans->withQueryString()->links('vendor.pagination.bootstrap-4') }}
+                @if(!isset($_GET['verified']))
+                    {{ $loans->withQueryString()->links('vendor.pagination.bootstrap-4') }}
+                @endif
             </ul>
         </div>
     </div>

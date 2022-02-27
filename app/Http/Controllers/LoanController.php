@@ -160,7 +160,7 @@ class LoanController extends Controller
             'KSOV' => $request->conclusion,
         ]);
         $statusUpdate = Status::where('loan_id', $request->input('loan_id'))->update(
-            ['simple_status' => config('simplestatus')[2]],
+            ['simple_status' => Str::limit(config('simplestatus')[2], 20)],
         );
         return redirect()->back();
     }
@@ -171,7 +171,7 @@ class LoanController extends Controller
             'KK' => $request->conclusion,
         ]);
         $statusUpdate = Status::where('loan_id', $request->input('loan_id'))->update(
-            ['simple_status' => config('simplestatus')[3]],
+            ['simple_status' => Str::limit(config('simplestatus')[3], 20)],
         );
         return redirect()->back();
     }

@@ -11,6 +11,7 @@ use App\Models\User;
 use DragonCode\Support\Facades\Helpers\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Str;
 
 class ExecutorController extends Controller
 {
@@ -35,7 +36,7 @@ class ExecutorController extends Controller
         Executor::setPublished($request->loan_id);
         Executor::setTimeOfStart($request->loan_id);
         $statusUpdate = Status::where('loan_id', $request->input('loan_id'))->update(
-            ['simple_status' => config('simplestatus')[1]],
+            ['simple_status' => Str::limit(config('simplestatus')[1], 20)],
         );
         return redirect()->back();
     }

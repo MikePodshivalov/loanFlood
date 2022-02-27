@@ -115,6 +115,7 @@
                     <p class="m-lg-1">{{$loan->description}}</p>
                 </div>
             @endif
+            <hr>
             <h4 class="display-8 mb-1 text-center">Документы для работы: </h4>
             <table id="path-table" class="table longPath mt-1">
                 <thead>
@@ -318,7 +319,13 @@
             @if($executorRole === 'UKK' && !$loan->KK)
                 @include('conclusions.KK')
             @endif
-            <a href="{{ URL::previous() }}"> Назад </a>
+            @if(Auth::user()->hasAnyRole('km_main', 'ukk_main', 'iab_main', 'pd_main', 'zs_main'))
+                <a href="{{ route('loans.index') }}"> Назад </a>
+            @elseif(Auth::user()->hasAnyRole('km', 'ukk', 'iab', 'pd', 'zs'))
+                <a href="{{ route('loans.homeIndex') }}"> Назад </a>
+            @else
+                <a href="{{ URL::previous() }}"> Назад </a>
+            @endif
         </div>
     </div>
 </div>

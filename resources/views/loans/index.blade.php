@@ -5,16 +5,25 @@
         <div class="row">
             @if(Route::getFacadeRoot()->current()->uri() === 'loans')
                 <form id="filter_form" action="{{route('loans.index')}}" method="get">
-                    <div class="col-4 filter">
+                    <div class="col-12 filter">
                         <input name="search_name" @if(isset($_GET['search_name'])) value="{{$_GET['search_name']}}" @endif type="text" class="form-control" id="exampleFormControlInput" placeholder="Поиск задачи">
                         <select name="type" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                            <option value="">По типу</option>
+                            <option value="">Тип</option>
                             @foreach(config('loanproduct') as $type)
                                 <option value="{{$type}}" @if(isset($_GET['type'])) @if($_GET['type'] == $type) selected @endif @endif>{{$type}}</option>
                             @endforeach
                         </select>
+                        <select name="simple_status" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option value="">Статус</option>
+                            @foreach(config('simplestatus') as $status)
+                                <option value="{{$status}}" @if(isset($_GET['simple_status'])) @if($_GET['simple_status'] == $status) selected @endif @endif>{{$status}}</option>
+                            @endforeach
+                        </select>
                     </div>
-                    <button type="submit" class="btn btn-alt-info">Фильтр</button>
+                    <button type="submit" class="btn btn-alt-info mt-3">Фильтр</button>
+                    <a href="{{ Route::current()->uri() }}">
+                        <button type="button" class="btn btn-alt-danger mt-3">Сбросить</button>
+                    </a>
                 </form>
             @endif
         </div>
