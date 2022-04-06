@@ -12,7 +12,7 @@
     <p>Описание: {{$loan->description}}</p>
 @endif
 
-@component('mail::button', ['url' => 'http://127.0.0.1:8000/loans/' . $loan->id])
+@component('mail::button', ['url' => env('APP_URL') . '/loans/' . $loan->id])
 К заявке
 @endcomponent
 

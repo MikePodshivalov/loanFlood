@@ -6,6 +6,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "ext-libxml": "*",
+        "ext-simplexml": "*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.4",
         "hflabs/dadata": "^20.12",
@@ -13,6 +15,7 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "mtownsend/xml-to-array": "^2.0",
         "spatie/laravel-permission": "^5.4"
     },
     "require-dev": {

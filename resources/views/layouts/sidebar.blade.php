@@ -79,8 +79,8 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link" href="#">
-                        <span class="nav-main-link-name">Работа с выписками ЕГРН (в разработке)</span>
+                    <a class="nav-main-link" href="{{route('Egrn')}}">
+                        <span class="nav-main-link-name{{str_contains(Route::currentRouteName(), 'Egrn') ? ' active' : '' }}">Работа с выписками ЕГРН (в разработке)</span>
                     </a>
                 </li>
                 <li class="nav-main-item">

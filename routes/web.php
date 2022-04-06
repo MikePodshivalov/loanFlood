@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DadataController;
 use App\Http\Controllers\DifficultyController;
+use App\Http\Controllers\EgrnController;
 use App\Http\Controllers\ExecutorController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\OperationController;
@@ -44,6 +45,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::group(['middleware' => ['verified']], function () {
     Route::post('/executor', [ExecutorController::class, 'update'])->name('executor.update');
+    Route::get('/Egrn', [EgrnController::class, 'index']);
+    Route::post('/Egrn', [EgrnController::class, 'egrnParse'])->name('Egrn');
+
 });
 
 Route::group(['middleware' => ['role:km_main|admin']], function () {

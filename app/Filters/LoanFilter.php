@@ -31,7 +31,7 @@ class LoanFilter extends QueryFilter
     {
         return $this->builder->when($status, function ($query) use ($status) {
             $query
-                ->join('statuses', 'id', '=', 'loan_id')
+                ->join('statuses', 'loans.id', '=', 'statuses.loan_id')
                 ->where('simple_status', $status);
         });
     }
